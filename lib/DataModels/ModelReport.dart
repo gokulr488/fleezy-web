@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelReport {
   ModelReport({
-    this.reportId,
+    required this.reportId,
     this.income = 0,
     this.pendingBal = 0,
     this.driverSal = 0,

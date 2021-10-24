@@ -1,25 +1,21 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/AppData.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/DataModels/ModelExpense.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Common/AppData.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataModels/ModelExpense.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Expense {
-  Expense() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> addExpense(
       ModelExpense expense, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     await fireStore
         .collection(Constants.COMPANIES)
         .doc(user.companyId)

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelUser {
   ModelUser(
-      {required this.uid,
+      {this.uid,
       required this.roleName,
       this.fullName,
       this.userEmailId,
@@ -12,7 +12,7 @@ class ModelUser {
       required this.state,
       this.tripId});
 
-  ModelUser.fromJson(Map<String, Object> json)
+  ModelUser.fromJson(Map<String, dynamic> json)
       : this(
           uid: json['Uid'] as String,
           roleName: (json['RoleName'] ?? '') as String,
@@ -24,7 +24,7 @@ class ModelUser {
           tripId: json['TripId'] as String,
         );
 
-  String uid;
+  String? uid;
   String roleName; //Avaiable roles Driver,Admin
   String? fullName;
   String? userEmailId;
@@ -36,7 +36,7 @@ class ModelUser {
 
   Map<String, Object> toJson() {
     return <String, Object>{
-      'Uid': uid,
+      'Uid': uid!,
       'RoleName': roleName,
       'FullName': fullName ?? '',
       'EmailId': userEmailId ?? '',

@@ -1,19 +1,16 @@
 // ignore_for_file: avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fleezy/Common/Authentication.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/DataAccess/DAOs/Company.dart';
-import 'package:fleezy/DataModels/ModelCompany.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Common/Authentication.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataAccess/DAOs/Company.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
 
 class UserManagement {
-  UserManagement() {
-    callContext = CallContext();
-  }
-  CallContext callContext;
-  User user;
+  CallContext callContext = CallContext();
+  User? user;
 
   Future<CallContext> addNewCompany(ModelCompany modelCompany) async {
     try {
@@ -27,7 +24,7 @@ class UserManagement {
             userEmailId: modelCompany.companyEmail,
             roleName: Constants.ADMIN,
             state: Constants.ACTIVE,
-            uid: user.uid);
+            uid: user?.uid);
         modelCompany.users = <String, ModelUser>{
           adminUser.phoneNumber: adminUser
         };
@@ -45,6 +42,6 @@ class UserManagement {
   }
 
   Future<CallContext> addUserToCompany(ModelUser user) async {
-    return null;
+    return callContext;
   }
 }

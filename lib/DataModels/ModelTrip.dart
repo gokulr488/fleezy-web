@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelTrip {
   ModelTrip(
-      {this.id,
-      this.startDate,
+      {required this.id,
+      required this.startDate,
       this.endDate,
-      this.startReading,
+      required this.startReading,
       this.endReading,
       this.distance,
       this.billAmount,
@@ -14,57 +14,56 @@ class ModelTrip {
       this.driverSalary,
       this.customerName,
       this.tripNo,
-      this.vehicleRegNo,
+      required this.vehicleRegNo,
       this.driverName,
-      this.driverUid,
-      this.startingFrom,
-      this.destination,
+      required this.driverUid,
+      required this.startingFrom,
+      required this.destination,
       this.status,
       this.isRoundTrip,
       this.customerPhone});
   String id;
-  String driverName;
+  String? driverName;
   String driverUid;
   Timestamp startDate;
-  Timestamp endDate;
-  // Timestamp timestamp; //same as startdate
+  Timestamp? endDate;
   int startReading;
-  int endReading;
-  int distance;
-  double billAmount;
-  double paidAmount;
-  double balanceAmount;
-  double driverSalary;
-  String customerName;
-  String customerPhone;
-  String tripNo;
+  int? endReading;
+  int? distance;
+  double? billAmount;
+  double? paidAmount;
+  double? balanceAmount;
+  double? driverSalary;
+  String? customerName;
+  String? customerPhone;
+  String? tripNo;
   String vehicleRegNo;
   String startingFrom;
   String destination;
-  String status;
-  bool isRoundTrip = false;
+  String? status;
+  bool? isRoundTrip = false;
 
   Map<String, Object> toJson() {
     return <String, Object>{
       'StartDate': startDate,
-      'EndDate': endDate,
+      'EndDate': endDate!,
       'StartReading': startReading,
-      'EndReading': endReading,
-      'Distance': distance,
-      'BillAmount': billAmount,
-      'PaidAmount': paidAmount,
-      'BalanceAmount': balanceAmount,
-      'DriverSalary': driverSalary,
-      'CustomerName': customerName,
-      'TripNo': tripNo,
+      'EndReading': endReading!,
+      'Distance': distance!,
+      'BillAmount': billAmount!,
+      'PaidAmount': paidAmount!,
+      'BalanceAmount': balanceAmount!,
+      'DriverSalary': driverSalary!,
+      'CustomerName': customerName!,
+      'TripNo': tripNo!,
       'VehicleRegNo': vehicleRegNo,
       'StartingFrom': startingFrom,
       'Destination': destination,
-      'DriverName': driverName,
+      'DriverName': driverName!,
       'DriverUid': driverUid,
-      'Status': status,
-      'IsRoundTrip': isRoundTrip,
-      'CustomerPhone': customerPhone,
+      'Status': status!,
+      'IsRoundTrip': isRoundTrip!,
+      'CustomerPhone': customerPhone!,
     };
   }
 

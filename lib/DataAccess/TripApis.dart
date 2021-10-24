@@ -1,25 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/AppData.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/Common/Utils.dart';
-import 'package:fleezy/DataModels/ModelTrip.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
-import 'package:fleezy/DataModels/ModelVehicle.dart';
+import 'package:fleezy_web/Common/AppData.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/Common/Utils.dart';
+import 'package:fleezy_web/DataModels/ModelTrip.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/DataModels/ModelVehicle.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TripApis {
-  TripApis() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> startNewTrip(
       ModelTrip trip, ModelVehicle vehicle, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> tripRef = fireStore
         .collection(Constants.COMPANIES)
@@ -50,7 +47,7 @@ class TripApis {
   }
 
   Future<CallContext> endTrip(ModelTrip trip, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
 
@@ -66,7 +63,8 @@ class TripApis {
           fireStore.collection(Constants.VEHICLES).doc(trip.vehicleRegNo);
       final ModelVehicle vehicle = ModelVehicle.fromDoc(await vehicleRef.get());
       vehicle.isInTrip = false;
-      vehicle.latestOdometerReading = trip.endReading;
+      vehicle.latestOdometerReading =
+          trip.endReading ?? vehicle.latestOdometerReading;
       batch.update(vehicleRef, vehicle.toJson());
 
       final DocumentReference<Map<String, dynamic>> driverRef =
@@ -94,7 +92,7 @@ class TripApis {
   }
 
   Future<CallContext> cancelTrip(ModelTrip trip, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
 
@@ -127,9 +125,9 @@ class TripApis {
     }
   }
 
-  Future<CallContext> filterTrips(BuildContext context, int limit,
-      {String regNo, DateTime from, DateTime to}) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+  Future<CallContext> filterTrips(BuildContext context, int? limit,
+      {String? regNo, DateTime? from, DateTime? to}) async {
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
         .doc(user.companyId)
@@ -150,7 +148,7 @@ class TripApis {
     } else {
       snapShot = await reference
           .orderBy('StartDate', descending: true)
-          .limit(limit)
+          .limit(limit!)
           .get();
     }
 
@@ -158,10 +156,10 @@ class TripApis {
     return callContext;
   }
 
-  Future<CallContext> getPendingBalanceTrips(
-      BuildContext context, String regNo, DocumentSnapshot<Object> page) async {
+  Future<CallContext> getPendingBalanceTrips(BuildContext context,
+      String? regNo, DocumentSnapshot<Object>? page) async {
     try {
-      final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+      final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
       Query<Map<String, dynamic>> reference = fireStore
           .collection(Constants.COMPANIES)
           .doc(user.companyId)

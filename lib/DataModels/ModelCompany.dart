@@ -1,28 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/DataModels/ModelExpense.dart';
-import 'package:fleezy/DataModels/ModelTrip.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
-import 'package:fleezy/DataModels/ModelVehicle.dart';
+import 'package:fleezy_web/DataModels/ModelExpense.dart';
+import 'package:fleezy_web/DataModels/ModelTrip.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 
 class ModelCompany {
   ModelCompany(
       {this.trip,
       this.users,
       this.expense,
-      this.companyName,
-      this.companyEmail,
+      required this.companyName,
+      required this.companyEmail,
       this.password,
-      this.phoneNumber,
+      required this.phoneNumber,
       this.vehicles});
 
   String companyName;
   String companyEmail;
-  String password;
+  String? password;
   String phoneNumber;
-  Map<String, ModelVehicle> vehicles;
-  Map<String, ModelUser> users;
-  Map<String, ModelExpense> expense;
-  Map<String, ModelTrip> trip;
+  Map<String, ModelVehicle>? vehicles;
+  Map<String, ModelUser>? users;
+  Map<String, ModelExpense>? expense;
+  Map<String, ModelTrip>? trip;
 
   static Map<String, dynamic> getDocOf(ModelCompany company) {
     return <String, dynamic>{
@@ -37,7 +37,8 @@ class ModelCompany {
     };
   }
 
-  static List<String> _getListOfUsers(Map<String, ModelUser> users) {
+  static List<String>? _getListOfUsers(Map<String, ModelUser>? users) {
+    if (users == null) return null;
     final List<String> userList = <String>[];
     for (final ModelUser user in users.values) {
       userList.add(user.phoneNumber);

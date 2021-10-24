@@ -1,26 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/AppData.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/Common/Utils.dart';
-import 'package:fleezy/DataModels/ModelExpense.dart';
-import 'package:fleezy/DataModels/ModelTrip.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
-import 'package:fleezy/DataModels/ModelVehicle.dart';
+import 'package:fleezy_web/Common/AppData.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/Common/Utils.dart';
+import 'package:fleezy_web/DataModels/ModelExpense.dart';
+import 'package:fleezy_web/DataModels/ModelTrip.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseApis {
-  ExpenseApis() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> addNewExpense(
       ModelExpense expense, ModelVehicle vehicle, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> expenseRef = fireStore
         .collection(Constants.COMPANIES)
@@ -44,7 +40,7 @@ class ExpenseApis {
 
   Future<CallContext> getExpensesInTrip(
       ModelTrip trip, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     final QuerySnapshot<Map<String, dynamic>> snapShot = await fireStore
         .collection(Constants.COMPANIES)
         .doc(user.companyId)
@@ -55,9 +51,9 @@ class ExpenseApis {
     return callContext;
   }
 
-  Future<CallContext> filterExpense(BuildContext context, int limit,
-      {String regNo, DateTime from, DateTime to}) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user;
+  Future<CallContext> filterExpense(BuildContext context, int? limit,
+      {String? regNo, DateTime? from, DateTime? to}) async {
+    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
         .doc(user.companyId)
@@ -78,7 +74,7 @@ class ExpenseApis {
     } else {
       snapShot = await reference
           .orderBy('timestamp', descending: true)
-          .limit(limit)
+          .limit(limit!)
           .get();
     }
 

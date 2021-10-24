@@ -1,17 +1,13 @@
 // ignore_for_file: always_specify_types
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
 
 class Roles {
-  Roles() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> addRole(ModelUser user) async {
     final DocumentSnapshot<Map<String, dynamic>> snapShot =
@@ -56,11 +52,10 @@ class Roles {
         .doc(phoneNumber)
         .withConverter<ModelUser>(
             fromFirestore: (snapshots, _) =>
-                ModelUser.fromJson(snapshots.data()),
+                ModelUser.fromJson(snapshots.data()!),
             toFirestore: (modelUser, _) => modelUser.toJson())
         .get();
-    if (!snapShot.exists) return null;
-    return snapShot.data();
+    return snapShot.data()!;
   }
 
   Future<List<ModelUser>> getAllUsersInCompany(String companyId) async {
@@ -68,7 +63,8 @@ class Roles {
         .collection(Constants.USERS)
         .where('CompanyId', isEqualTo: companyId)
         .withConverter<ModelUser>(
-          fromFirestore: (snapshots, _) => ModelUser.fromJson(snapshots.data()),
+          fromFirestore: (snapshots, _) =>
+              ModelUser.fromJson(snapshots.data()!),
           toFirestore: (modelUser, _) => modelUser.toJson(),
         )
         .get();

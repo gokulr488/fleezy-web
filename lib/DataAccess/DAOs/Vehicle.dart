@@ -1,25 +1,17 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/AppData.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/DataModels/ModelUser.dart';
-import 'package:fleezy/DataModels/ModelVehicle.dart';
+import 'package:fleezy_web/Common/AppData.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 
 class Vehicle {
-  Vehicle() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> addVehicle(ModelVehicle vehicle) async {
-    if (vehicle.companyId == null) {
-      callContext.setError('companyId is null for the vehicle');
-      return callContext;
-    }
     final DocumentSnapshot<Map<String, dynamic>> docSnap = await fireStore
         .collection(Constants.VEHICLES)
         .doc(vehicle.registrationNo)
@@ -66,10 +58,6 @@ class Vehicle {
   }
 
   Future<List<ModelVehicle>> _getVehiclesForUser(ModelUser user) async {
-    if (user?.companyId == null || user.phoneNumber == null) {
-      print('companyId or phoneNumber is null');
-      return null;
-    }
     QuerySnapshot<Map<String, dynamic>> snapShot;
     if (user.roleName == Constants.ADMIN) {
       snapShot = await fireStore
@@ -84,17 +72,13 @@ class Vehicle {
           .get();
     }
 
-    if (snapShot == null) {
-      print('No Vehicles Found');
-      return null;
-    }
     return ModelVehicle.fromDocs(snapShot);
   }
 
   Future<void> getVehicleList(AppData appData) async {
     final List<ModelVehicle> vehiclesData =
-        await _getVehiclesForUser(appData.user);
-    if (vehiclesData != null && vehiclesData.isNotEmpty) {
+        await _getVehiclesForUser(appData.user!);
+    if (vehiclesData.isNotEmpty) {
       appData.setAvailableVehicles(vehiclesData);
     }
   }

@@ -1,18 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fleezy/Common/CallContext.dart';
-import 'package:fleezy/Common/Constants.dart';
-import 'package:fleezy/DataAccess/DAOs/Roles.dart';
-import 'package:fleezy/DataModels/ModelCompany.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
+import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataAccess/DAOs/Roles.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 
 class Company {
-  Company() {
-    fireStore = FirebaseFirestore.instance;
-    callContext = CallContext();
-  }
-  FirebaseFirestore fireStore;
-  CallContext callContext;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CallContext callContext = CallContext();
 
   Future<CallContext> addCompany(ModelCompany company) async {
     final DocumentSnapshot<Map<String, dynamic>> snapShot = await fireStore
@@ -31,9 +27,12 @@ class Company {
         .then((dynamic value) => print('Company Added'))
         .catchError((dynamic error) {
       callContext.setError('Failed to add company: $error');
-      return callContext;
     });
-    return Roles().addRole(company.users.values.first);
+    if (callContext.isError) {
+      return callContext;
+    }
+
+    return Roles().addRole(company.users!.values.first);
   }
 
   Future<void> updateCompany(ModelCompany company) async {
