@@ -68,30 +68,6 @@ class Authentication {
   }
 
   void verifyPhone(String phoneNo) {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      _signIn(authResult);
-    };
-
-    final PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException authException) {
-      debugPrint(authException.message);
-    };
-
-    final PhoneCodeSent smsSent = (String verId, [int? forceResend]) {
-      verificationId = verId;
-      debugPrint(verId);
-    };
-
-    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-      verificationId = verId;
-    };
-
-    _auth.verifyPhoneNumber(
-        phoneNumber: phoneNo,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: verified,
-        verificationFailed: verificationFailed,
-        codeSent: smsSent,
-        codeAutoRetrievalTimeout: autoTimeout);
+    _auth.signInWithPhoneNumber(phoneNo);
   }
 }

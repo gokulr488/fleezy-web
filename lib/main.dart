@@ -37,13 +37,13 @@ class _FleezyWebAppState extends State<FleezyWebApp> {
         // Check for errors
         if (snapshot.hasError) {
           debugPrint(snapshot.error.toString());
-          return _getFlutterApp(LoadingScreen.id);
+          return _getFlutterApp(LoginScreen.id);
         }
         if (snapshot.connectionState == ConnectionState.done) {
           debugPrint('Initialised Firebase');
           return _getFlutterApp(LoginScreen.id);
         }
-        return _getFlutterApp(LoadingScreen.id);
+        return _getFlutterApp(LoginScreen.id);
       },
     );
   }
