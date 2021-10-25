@@ -1,6 +1,6 @@
 import 'package:fleezy_web/Common/UiConstants.dart';
-import 'package:fleezy_web/Screens/LoadingScreen.dart';
-import 'package:fleezy_web/Screens/LoginScreen.dart';
+import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
+import 'package:fleezy_web/Screens/LandingScreens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
 // Import the firebase_core plugin
@@ -34,32 +34,34 @@ class _FleezyWebAppState extends State<FleezyWebApp> {
       // Initialize FlutterFire:
       future: _initialization,
       builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
-        MaterialApp _getFlutterApp(String initialRoute) {
-          return MaterialApp(
-              title: 'Fleezy',
-              theme: ThemeData(
-                  primaryColor: kPrimaryColor,
-                  //brightness: Brightness.dark,
-                  textTheme: GoogleFonts.koHoTextTheme(
-                      ThemeData(brightness: Brightness.light).textTheme)),
-              initialRoute: initialRoute,
-              routes: <String, Widget Function(BuildContext)>{
-                LoginScreen.id: (BuildContext context) => LoginScreen(),
-                LoadingScreen.id: (BuildContext context) => LoadingScreen(),
-              });
-        }
-
         // Check for errors
         if (snapshot.hasError) {
+          debugPrint(snapshot.error.toString());
           return _getFlutterApp(LoadingScreen.id);
         }
-
-        // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
+          debugPrint('Initialised Firebase');
           return _getFlutterApp(LoginScreen.id);
         }
         return _getFlutterApp(LoadingScreen.id);
       },
     );
+  }
+
+  MaterialApp _getFlutterApp(String initialRoute) {
+    return MaterialApp(
+        title: 'Fleezy',
+        theme: ThemeData(
+            primaryColor: kPrimaryColor,
+            primarySwatch: Colors.lime,
+            //brightness: Brightness.dark,
+            textTheme: GoogleFonts.koHoTextTheme(
+                ThemeData(brightness: Brightness.light).textTheme)),
+        debugShowCheckedModeBanner: false,
+        initialRoute: initialRoute,
+        routes: <String, Widget Function(BuildContext)>{
+          LoginScreen.id: (BuildContext context) => LoginScreen(),
+          LoadingScreen.id: (BuildContext context) => LoadingScreen(),
+        });
   }
 }

@@ -21,7 +21,7 @@ class ModelUser {
           phoneNumber: (json['PhoneNumber'] ?? '') as String,
           companyId: (json['CompanyId'] ?? '') as String,
           state: (json['State'] ?? '') as String,
-          tripId: json['TripId'] as String,
+          tripId: json['TripId'],
         );
 
   String? uid;

@@ -36,7 +36,7 @@ class AppData extends ChangeNotifier {
 
   //SETTERS
 
-  void setUser(ModelUser user) {
+  void setUser(ModelUser? user) {
     _user = user;
     notifyListeners();
   }

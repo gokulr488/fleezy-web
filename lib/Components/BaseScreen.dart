@@ -14,20 +14,21 @@ class BaseScreen extends StatelessWidget {
       appBar: headerText.isEmpty
           ? null
           : AppBar(
+              toolbarHeight: 45,
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(headerText,
                         style: GoogleFonts.laila(
                           color: kTextColor,
-                          fontSize: 21,
+                          fontSize: 20,
                         )),
                     Text('Fleezy',
                         style: GoogleFonts.dancingScript(
                             color: kHighlightColour,
                             shadows: shadow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 45))
+                            fontSize: 35))
                   ]),
             ),
       backgroundColor: kBackgroundColor,

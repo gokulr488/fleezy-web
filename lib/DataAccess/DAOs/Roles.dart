@@ -27,7 +27,11 @@ class Roles {
     return callContext;
   }
 
-  Future<CallContext> updateRole(ModelUser user) async {
+  Future<CallContext> updateRole(ModelUser? user) async {
+    if (user == null) {
+      callContext.setError('User is null');
+      return callContext;
+    }
     await fireStore
         .collection(Constants.USERS)
         .doc(user.phoneNumber)
@@ -42,11 +46,11 @@ class Roles {
     await fireStore.collection(Constants.USERS).doc(docid).delete();
   }
 
-  Future<ModelUser> verifyUser(String phoneNumber) async {
+  Future<ModelUser?> verifyUser(String phoneNumber) async {
     return getUser(phoneNumber);
   }
 
-  Future<ModelUser> getUser(String phoneNumber) async {
+  Future<ModelUser?> getUser(String phoneNumber) async {
     final DocumentSnapshot<ModelUser> snapShot = await fireStore
         .collection(Constants.USERS)
         .doc(phoneNumber)
@@ -55,7 +59,7 @@ class Roles {
                 ModelUser.fromJson(snapshots.data()!),
             toFirestore: (modelUser, _) => modelUser.toJson())
         .get();
-    return snapShot.data()!;
+    return snapShot.data();
   }
 
   Future<List<ModelUser>> getAllUsersInCompany(String companyId) async {

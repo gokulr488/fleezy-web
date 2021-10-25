@@ -8,7 +8,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseScreen(
-        child: Center(child: LoadingDots(size: 50)),
+        child: Center(child: LoadingDots(size: 75)),
         headerText: 'Loading Fleezy. Please Wait');
   }
 }

@@ -16,7 +16,7 @@ const Color kActiveCardColor = Color(0xFFdce775);
 const Color kCancelledCardColor = Color(0xffffccbc);
 
 const List<Shadow> shadow = <Shadow>[
-  Shadow(offset: Offset(2, 2), blurRadius: 7)
+  Shadow(offset: Offset(2, 2), blurRadius: 3)
 ];
 
 const Duration kAnimDuraction = Duration(milliseconds: 350);
