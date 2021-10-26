@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class LoginController {
   late Stream<User?> userStream;
-  late StreamSubscription<User> userSubscription;
+  late StreamSubscription<User?> userSubscription;
 
   late Stream<String> messages;
   StreamController<String> streamCtrl = StreamController<String>();
