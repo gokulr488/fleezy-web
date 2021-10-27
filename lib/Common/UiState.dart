@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class UiState extends ChangeNotifier {
   bool _isAdmin = true;
-  late Widget _centerWidget;
+  Widget _centerWidget = const Text('Welcome');
 
   //GETTERS
   bool get isAdmin => _isAdmin;

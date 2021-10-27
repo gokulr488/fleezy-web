@@ -1,7 +1,12 @@
 import 'package:fleezy_web/Common/UiConstants.dart';
+import 'package:fleezy_web/Common/UiState.dart';
 import 'package:fleezy_web/Components/BaseScreen.dart';
 import 'package:fleezy_web/Components/Responsive.dart';
+import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
+import 'package:fleezy_web/Screens/VehicleManagementScreens/VehiclesScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'HomeScreen';
@@ -13,9 +18,18 @@ class HomeScreen extends StatelessWidget {
             ? const Drawer(child: _DrawerElements())
             : null,
         child: Responsive(
-            mobile: const Text('Mobile view'),
+            mobile: Consumer<UiState>(
+                builder: (BuildContext context, UiState uiState, _) {
+              return uiState.centerWidget;
+            }),
             desktop: Row(
-              children: const <Widget>[_DrawerElements()],
+              children: <Widget>[
+                const _DrawerElements(),
+                Consumer<UiState>(
+                    builder: (BuildContext context, UiState uiState, _) {
+                  return uiState.centerWidget;
+                })
+              ],
             )));
   }
 }
@@ -26,20 +40,39 @@ class _DrawerElements extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UiState uiState = Provider.of<UiState>(context, listen: false);
     return Container(
       width: Responsive.isDesktop(context) ? 250 : null,
       color: kActiveCardColor,
       child: ListView(
         children: <Widget>[
+          if (Responsive.isMobile(context))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text('Fleezy',
+                  style: GoogleFonts.dancingScript(
+                      color: kHighlightColour,
+                      shadows: shadow,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35)),
+            ),
           ListTile(
               leading: const Icon(Icons.account_balance_outlined),
               title: Text('Companies', style: drawerTS)),
           ListTile(
               leading: const Icon(Icons.car_repair),
-              title: Text('Vehicles', style: drawerTS)),
+              title: Text('Vehicles', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const VehiclesScreen());
+              }),
           ListTile(
               leading: const Icon(Icons.account_circle),
-              title: Text('Drivers', style: drawerTS)),
+              title: Text('Drivers', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const DriverManagementScreen());
+              }),
           ListTile(
               leading: const Icon(Icons.attach_money),
               title: Text('Pending Balances', style: drawerTS)),
