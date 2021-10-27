@@ -77,7 +77,7 @@ class LoginController {
       streamCtrl.add('This Phone Number is not Registered');
       return;
     } else if (user?.state != Constants.ACTIVE) {
-      streamCtrl.add('This Phone Number is in ${user?.state} state');
+      streamCtrl.add('This Phone Number is ${user?.state}');
       return;
     }
     auth.verifyPhone(phoneNo);

@@ -54,23 +54,22 @@ class _LoginScreenState extends State<LoginScreen> {
             child: TextField(
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
-                onChanged: (String value) {
-                  ctrl.phoneNo = '+91$value'; //TODO change this impl
-                },
+                onChanged: (String value) =>
+                    ctrl.phoneNo = '+91$value' //TODO change this impl
+                ,
                 decoration:
                     kTextFieldDecoration.copyWith(labelText: 'Phone Number')),
           ),
-          Visibility(
-              visible: ctrl.verified,
-              child: TextField(
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  onChanged: (String value) {
-                    ctrl.otp = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      labelText: 'Enter the OTP'))),
+          SizedBox(
+            width: 300,
+            child: TextField(
+                obscureText: true,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                onChanged: (String value) => ctrl.otp = value,
+                decoration:
+                    kTextFieldDecoration.copyWith(labelText: 'Enter the OTP')),
+          ),
           RoundedButton(
             title: ctrl.verified ? 'Log In' : 'Send OTP',
             width: 300,

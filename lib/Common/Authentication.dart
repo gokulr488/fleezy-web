@@ -67,7 +67,9 @@ class Authentication {
     await _signIn(authCreds);
   }
 
-  void verifyPhone(String phoneNo) {
-    _auth.signInWithPhoneNumber(phoneNo);
+  Future<void> verifyPhone(String phoneNo) async {
+    ConfirmationResult result = await _auth.signInWithPhoneNumber(phoneNo);
+    verificationId = result.verificationId;
+    debugPrint('Verification ID: $verificationId');
   }
 }

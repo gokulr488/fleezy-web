@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen(
-      {required this.child, this.bottomNavBar, required this.headerText});
+      {this.bottomNavBar, required this.headerText, required this.child});
   final Widget child;
   final Widget? bottomNavBar;
   final String headerText;
