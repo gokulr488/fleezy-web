@@ -1,5 +1,6 @@
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
+import 'package:fleezy_web/Common/UiState.dart';
 import 'package:fleezy_web/Screens/HomePage/HomeScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/ErrorScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
@@ -14,6 +15,7 @@ void main() {
     // ignore: always_specify_types
     providers: [
       ChangeNotifierProvider<AppData>(create: (_) => AppData()),
+      ChangeNotifierProvider<UiState>(create: (_) => UiState()),
     ],
     child: FleezyWebApp(),
   ));
