@@ -118,8 +118,7 @@ class _LoginForm extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 onChanged: (String value) => ctrl.otp = value,
-                decoration:
-                    kTextFieldDecoration.copyWith(labelText: 'Enter the OTP')),
+                decoration: kTextFieldDecoration.copyWith(labelText: 'OTP')),
           ),
           RoundedButton(
             title: ctrl.verified ? 'Log In' : 'Send OTP',

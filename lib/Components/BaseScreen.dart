@@ -4,13 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen(
-      {this.bottomNavBar, required this.headerText, required this.child});
+      {this.bottomNavBar,
+      required this.headerText,
+      required this.child,
+      this.drawer});
   final Widget child;
   final Widget? bottomNavBar;
   final String headerText;
+  final Widget? drawer;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: drawer,
       appBar: headerText.isEmpty
           ? null
           : AppBar(
@@ -33,10 +38,7 @@ class BaseScreen extends StatelessWidget {
             ),
       backgroundColor: kBackgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: child,
-        ),
+        child: child,
       ),
       bottomNavigationBar: bottomNavBar,
     );
