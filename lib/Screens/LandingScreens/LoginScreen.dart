@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Components/BaseScreen.dart';
 import 'package:fleezy_web/Components/LoadingDots.dart';
+import 'package:fleezy_web/Components/Responsive.dart';
 import 'package:fleezy_web/Components/RoundedButton.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoginController.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,56 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BaseScreen(
       headerText: 'Welcome To Fleezy',
+      child: Responsive(
+          mobile: Column(
+            children: <Widget>[
+              const _ImageWidget(),
+              _LoginForm(message: message, ctrl: ctrl),
+            ],
+          ),
+          desktop: Row(
+            children: <Widget>[
+              const _ImageWidget(),
+              _LoginForm(message: message, ctrl: ctrl),
+            ],
+          )),
+    );
+  }
+
+  Future<void> onUserStreamEvent(User? user) async {
+    if (user == null) {
+      debugPrint('Login Screen :User is currently signed out!');
+    } else {
+      if (ctrl.verified) {
+        ctrl.verified = false; //to avoid multiple entry into this code
+        ctrl.showSpinner = true;
+        ctrl.disableButton = true;
+        setState(() {});
+        await ctrl.onVerificationCompleted(context);
+        debugPrint('Login Screen :User signed in!');
+      }
+    }
+  }
+
+  void onMessage(String event) {
+    message = event;
+    setState(() {});
+  }
+}
+
+class _LoginForm extends StatelessWidget {
+  const _LoginForm({
+    required this.message,
+    required this.ctrl,
+  });
+
+  final String message;
+  final LoginController ctrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: Responsive.isDesktop(context) ? 1 : 3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -81,24 +132,19 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
 
-  Future<void> onUserStreamEvent(User? user) async {
-    if (user == null) {
-      debugPrint('Login Screen :User is currently signed out!');
-    } else {
-      if (ctrl.verified) {
-        ctrl.verified = false; //to avoid multiple entry into this code
-        ctrl.showSpinner = true;
-        ctrl.disableButton = true;
-        setState(() {});
-        await ctrl.onVerificationCompleted(context);
-        debugPrint('Login Screen :User signed in!');
-      }
-    }
-  }
+class _ImageWidget extends StatelessWidget {
+  const _ImageWidget();
 
-  void onMessage(String event) {
-    message = event;
-    setState(() {});
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: Responsive.isDesktop(context) ? 3 : 1,
+      child: Image.asset(
+        'assets/images/startPageImage.jpg',
+        colorBlendMode: BlendMode.darken,
+      ),
+    );
   }
 }

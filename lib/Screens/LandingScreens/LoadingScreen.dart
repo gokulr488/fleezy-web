@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fleezy_web/Components/BaseScreen.dart';
 import 'package:fleezy_web/Components/LoadingDots.dart';
 import 'package:fleezy_web/Screens/HomePage/HomeScreen.dart';
+import 'package:fleezy_web/Screens/LandingScreens/ErrorScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +40,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     if (_isLoggedIn) return HomeScreen();
     if (_error) {
-      return const BaseScreen(
-          child: Center(child: LoadingDots(size: 75)),
-          headerText: 'Loading Fleezy. Please Wait');
+      return const ErrorScreen();
     }
     if (!_initialized) {
       return const BaseScreen(
