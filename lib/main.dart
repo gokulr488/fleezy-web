@@ -37,7 +37,7 @@ class FleezyWebApp extends StatelessWidget {
         routes: <String, Widget Function(BuildContext)>{
           LoginScreen.id: (BuildContext context) => LoginScreen(),
           LoadingScreen.id: (BuildContext context) => LoadingScreen(),
-          ErrorScreen.id: (BuildContext context) => ErrorScreen(),
+          ErrorScreen.id: (BuildContext context) => const ErrorScreen(),
           HomeScreen.id: (BuildContext context) => HomeScreen(),
         });
   }

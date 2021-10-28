@@ -3,6 +3,7 @@ import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelTrip.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
@@ -17,10 +18,12 @@ class TripApis {
   Future<CallContext> startNewTrip(
       ModelTrip trip, ModelVehicle vehicle, BuildContext context) async {
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> tripRef = fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.TRIP)
         .doc();
     trip.id = tripRef.id;
@@ -47,13 +50,15 @@ class TripApis {
   }
 
   Future<CallContext> endTrip(ModelTrip trip, BuildContext context) async {
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
 
       final DocumentReference<Map<String, dynamic>> tripRef = fireStore
           .collection(Constants.COMPANIES)
-          .doc(user.companyId)
+          .doc(company.companyEmail)
           .collection(Constants.TRIP)
           .doc(trip.id);
       trip.status = Constants.ENDED;
@@ -92,13 +97,15 @@ class TripApis {
   }
 
   Future<CallContext> cancelTrip(ModelTrip trip, BuildContext context) async {
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
 
       final DocumentReference<Map<String, dynamic>> tripRef = fireStore
           .collection(Constants.COMPANIES)
-          .doc(user.companyId)
+          .doc(company.companyEmail)
           .collection(Constants.TRIP)
           .doc(trip.id);
       trip.status = Constants.CANCELLED;
@@ -127,10 +134,11 @@ class TripApis {
 
   Future<CallContext> filterTrips(BuildContext context, int? limit,
       {String? regNo, DateTime? from, DateTime? to}) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.TRIP);
     if (regNo != null) {
       reference = reference.where('VehicleRegNo', isEqualTo: regNo);
@@ -159,10 +167,11 @@ class TripApis {
   Future<CallContext> getPendingBalanceTrips(BuildContext context,
       String? regNo, DocumentSnapshot<Object>? page) async {
     try {
-      final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+      final ModelCompany company =
+          Provider.of<AppData>(context, listen: false).selectedCompany;
       Query<Map<String, dynamic>> reference = fireStore
           .collection(Constants.COMPANIES)
-          .doc(user.companyId)
+          .doc(company.companyEmail)
           .collection(Constants.TRIP);
       if (regNo != null) {
         reference = reference.where('VehicleRegNo', isEqualTo: regNo);

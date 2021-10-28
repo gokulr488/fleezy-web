@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelExpense.dart';
-import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +15,11 @@ class Expense {
 
   Future<CallContext> addExpense(
       ModelExpense expense, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     await fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.EXPENSE)
         .add(expense.toJson())
         .then((dynamic value) => callContext.setSuccess('expense added'))

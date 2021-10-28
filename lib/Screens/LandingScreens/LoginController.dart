@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/Authentication.dart';
+import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataAccess/DAOs/Company.dart';
 import 'package:fleezy_web/DataAccess/DAOs/Roles.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/Screens/HomePage/HomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +25,7 @@ class LoginController {
   ModelUser? user = ModelUser(
       roleName: Constants.DRIVER,
       phoneNumber: '',
-      companyId: '',
+      companyId: <String>[],
       state: Constants.INACTIVE);
   late String phoneNo;
   late String otp;
@@ -41,9 +44,16 @@ class LoginController {
       user?.uid = Authentication().getUser()?.uid;
       await Roles().updateRole(user);
     }
+
     // if (user.roleName != Constants.ADMIN) {
     //   Provider.of<UiState>(context, listen: false).setIsAdmin(isAdmin: false);
     // }
+    CallContext callContext =
+        await Company().getCompanyById(user!.companyId.first);
+    if (!callContext.isError) {
+      Provider.of<AppData>(context, listen: false)
+          .setSelectedCompany(callContext.data);
+    }
     await Navigator.pushReplacementNamed(context, HomeScreen.id);
     await streamCtrl.close();
   }

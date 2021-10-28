@@ -1,7 +1,9 @@
+import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Common/UiState.dart';
 import 'package:fleezy_web/Components/BaseScreen.dart';
 import 'package:fleezy_web/Components/Responsive.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
 import 'package:fleezy_web/Screens/VehicleManagementScreens/VehiclesScreen.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,10 @@ class HomeScreen extends StatelessWidget {
   static const String id = 'HomeScreen';
   @override
   Widget build(BuildContext context) {
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     return BaseScreen(
-        headerText: 'Welcome',
+        headerText: 'Welcome to ${company.companyName}',
         drawer: Responsive.isMobile(context)
             ? const Drawer(child: _DrawerElements())
             : null,

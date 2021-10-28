@@ -3,9 +3,9 @@ import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelExpense.dart';
 import 'package:fleezy_web/DataModels/ModelTrip.dart';
-import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +16,12 @@ class ExpenseApis {
 
   Future<CallContext> addNewExpense(
       ModelExpense expense, ModelVehicle vehicle, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> expenseRef = fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.EXPENSE)
         .doc();
     expense.id = expenseRef.id;
@@ -40,10 +41,11 @@ class ExpenseApis {
 
   Future<CallContext> getExpensesInTrip(
       ModelTrip trip, BuildContext context) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     final QuerySnapshot<Map<String, dynamic>> snapShot = await fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.EXPENSE)
         .where('tripNo', isEqualTo: trip.id)
         .get();
@@ -53,10 +55,11 @@ class ExpenseApis {
 
   Future<CallContext> filterExpense(BuildContext context, int? limit,
       {String? regNo, DateTime? from, DateTime? to}) async {
-    final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
-        .doc(user.companyId)
+        .doc(company.companyEmail)
         .collection(Constants.EXPENSE);
     if (regNo != null) {
       reference = reference.where('vehicleRegNo', isEqualTo: regNo);

@@ -46,15 +46,15 @@ class ModelCompany {
     return userList;
   }
 
-  static ModelCompany getCompanyFromDoc(DocumentSnapshot<String> doc) {
-    final Map<String, String> data = doc.data() as Map<String, String>;
+  static ModelCompany fromDoc(DocumentSnapshot<dynamic> doc) {
+    final Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
 
     return ModelCompany(
-      companyName: data['CompanyName'] ?? '',
-      companyEmail: data['CompanyEmail'] ?? '',
-      password: data['Password'] ?? '',
+      companyName: (json['CompanyName'] ?? '') as String,
+      companyEmail: (json['CompanyEmail'] ?? '') as String,
+      password: (json['Password'] ?? '') as String,
       //vehicles: data['Vehicles'] ?? '',
-      phoneNumber: data['PhoneNumber'] ?? '',
+      phoneNumber: (json['PhoneNumber'] ?? '') as String,
       //users: data['Users'] ?? '',
       //expense: data['Expense'] ?? '',
       //trip: data['Trip'] ?? '',
@@ -64,13 +64,13 @@ class ModelCompany {
   static List<ModelCompany> getCompanyFrom(QuerySnapshot<String> snapshot) {
     final List<ModelCompany> users = <ModelCompany>[];
     for (final DocumentSnapshot<String> doc in snapshot.docs) {
-      users.add(getCompanyFromDoc(doc));
+      users.add(fromDoc(doc));
     }
     return users;
   }
 
   static ModelCompany getUserFromSnapshot(QuerySnapshot<String> snapshot) {
     final DocumentSnapshot<String> doc = snapshot.docs.first;
-    return getCompanyFromDoc(doc);
+    return fromDoc(doc);
   }
 }
