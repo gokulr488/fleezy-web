@@ -17,7 +17,7 @@ class ExpenseApis {
   Future<CallContext> addNewExpense(
       ModelExpense expense, ModelVehicle vehicle, BuildContext context) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> expenseRef = fireStore
         .collection(Constants.COMPANIES)
@@ -42,7 +42,7 @@ class ExpenseApis {
   Future<CallContext> getExpensesInTrip(
       ModelTrip trip, BuildContext context) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     final QuerySnapshot<Map<String, dynamic>> snapShot = await fireStore
         .collection(Constants.COMPANIES)
         .doc(company.companyEmail)
@@ -56,7 +56,7 @@ class ExpenseApis {
   Future<CallContext> filterExpense(BuildContext context, int? limit,
       {String? regNo, DateTime? from, DateTime? to}) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
         .doc(company.companyEmail)

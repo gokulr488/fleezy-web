@@ -38,7 +38,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoggedIn) return HomeScreen();
+    if (_isLoggedIn) {
+      return HomeScreen();
+    }
     if (_error) {
       return const ErrorScreen();
     }

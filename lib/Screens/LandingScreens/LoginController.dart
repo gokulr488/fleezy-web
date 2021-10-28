@@ -48,12 +48,6 @@ class LoginController {
     // if (user.roleName != Constants.ADMIN) {
     //   Provider.of<UiState>(context, listen: false).setIsAdmin(isAdmin: false);
     // }
-    CallContext callContext =
-        await Company().getCompanyById(user!.companyId.first);
-    if (!callContext.isError) {
-      Provider.of<AppData>(context, listen: false)
-          .setSelectedCompany(callContext.data);
-    }
     await Navigator.pushReplacementNamed(context, HomeScreen.id);
     await streamCtrl.close();
   }

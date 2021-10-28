@@ -19,7 +19,7 @@ class TripApis {
       ModelTrip trip, ModelVehicle vehicle, BuildContext context) async {
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     final WriteBatch batch = fireStore.batch();
     final DocumentReference<Map<String, dynamic>> tripRef = fireStore
         .collection(Constants.COMPANIES)
@@ -51,7 +51,7 @@ class TripApis {
 
   Future<CallContext> endTrip(ModelTrip trip, BuildContext context) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
@@ -98,7 +98,7 @@ class TripApis {
 
   Future<CallContext> cancelTrip(ModelTrip trip, BuildContext context) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;
     try {
       final WriteBatch batch = fireStore.batch();
@@ -135,7 +135,7 @@ class TripApis {
   Future<CallContext> filterTrips(BuildContext context, int? limit,
       {String? regNo, DateTime? from, DateTime? to}) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     Query<Map<String, dynamic>> reference = fireStore
         .collection(Constants.COMPANIES)
         .doc(company.companyEmail)
@@ -168,7 +168,7 @@ class TripApis {
       String? regNo, DocumentSnapshot<Object>? page) async {
     try {
       final ModelCompany company =
-          Provider.of<AppData>(context, listen: false).selectedCompany;
+          Provider.of<AppData>(context, listen: false).selectedCompany!;
       Query<Map<String, dynamic>> reference = fireStore
           .collection(Constants.COMPANIES)
           .doc(company.companyEmail)

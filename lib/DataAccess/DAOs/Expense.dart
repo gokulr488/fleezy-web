@@ -16,7 +16,7 @@ class Expense {
   Future<CallContext> addExpense(
       ModelExpense expense, BuildContext context) async {
     final ModelCompany company =
-        Provider.of<AppData>(context, listen: false).selectedCompany;
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
     await fireStore
         .collection(Constants.COMPANIES)
         .doc(company.companyEmail)
