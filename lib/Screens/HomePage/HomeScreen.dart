@@ -110,7 +110,28 @@ class _DrawerElements extends StatelessWidget {
               title: Text('Companies', style: drawerTS)),
           ListTile(
               leading: const Icon(Icons.car_repair),
-              title: Text('Vehicles', style: drawerTS),
+              title: Text('Add New Trip', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const VehiclesScreen());
+              }),
+          ListTile(
+              leading: const Icon(Icons.car_repair),
+              title: Text('Add Fuel', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const VehiclesScreen());
+              }),
+          ListTile(
+              leading: const Icon(Icons.car_repair),
+              title: Text('Add Expense', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const VehiclesScreen());
+              }),
+          ListTile(
+              leading: const Icon(Icons.car_repair),
+              title: Text('Manage Vehicles', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();
                 uiState.setCenterWidget(const VehiclesScreen());
