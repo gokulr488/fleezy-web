@@ -14,8 +14,7 @@ class VehicleSearchBox extends StatelessWidget {
     List<ModelVehicle> vehicles =
         Provider.of<AppData>(context, listen: false).availableVehicles;
     return DropdownSearch<ModelVehicle>(
-      compareFn: (ModelVehicle? i, ModelVehicle? s) =>
-          i?.registrationNo == s?.registrationNo,
+      compareFn: compareFn,
       showClearButton: true,
       showSearchBox: true,
       mode: Mode.MENU,
@@ -25,5 +24,9 @@ class VehicleSearchBox extends StatelessWidget {
       items: vehicles,
       onChanged: onChanged,
     );
+  }
+
+  bool compareFn(ModelVehicle? i, ModelVehicle? s) {
+    return i?.registrationNo == s?.registrationNo;
   }
 }

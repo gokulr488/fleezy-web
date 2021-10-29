@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<AppData>(context, listen: false).selectedCompany;
     return BaseScreen(
         headerText: 'Welcome to ${company?.companyName ?? 'FleeZy'}',
-        drawer: Responsive.isMobile(context)
+        drawer: !Responsive.isDesktop(context)
             ? const Drawer(child: _DrawerElements())
             : null,
         child: Responsive(
@@ -55,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (BuildContext context, UiState uiState, _) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: uiState.centerWidget,
+                    child: SizedBox(
+                        width: MediaQuery.of(context).size.width - 266,
+                        child: uiState.centerWidget),
                   );
                 })
               ],
