@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/Authentication.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
@@ -11,22 +12,34 @@ import 'package:fleezy_web/DataAccess/DAOs/Roles.dart';
 import 'package:fleezy_web/DataAccess/DAOs/Vehicle.dart';
 import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Screens/AddTripScreen/AddTripScreen.dart';
 import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
-import 'package:fleezy_web/Screens/VehicleManagementScreens/VehiclesScreen.dart';
+import 'package:fleezy_web/Screens/VehicleManagementScreen/VehiclesScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String id = 'HomeScreen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    _getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _getUserData(context);
     final ModelCompany? company =
         Provider.of<AppData>(context, listen: false).selectedCompany;
     return BaseScreen(
-        headerText: 'Welcome to ${company?.companyName ?? ''}',
+        headerText: 'Welcome to ${company?.companyName ?? 'FleeZy'}',
         drawer: Responsive.isMobile(context)
             ? const Drawer(child: _DrawerElements())
             : null,
@@ -46,12 +59,16 @@ class HomeScreen extends StatelessWidget {
             )));
   }
 
-  Future<void> _getUserData(BuildContext context) async {
+  Future<void> _getUserData() async {
     final AppData appData = Provider.of<AppData>(context, listen: false);
     if (appData.user == null) {
       debugPrint('Getting User basic Info.');
-      final ModelUser? user =
-          await Roles().getUser(Authentication().getUser()!.phoneNumber!);
+      User? authUser = Authentication().getUser();
+      if (authUser == null) {
+        _logoutUser(context);
+        return;
+      }
+      final ModelUser? user = await Roles().getUser(authUser.phoneNumber);
       if (user?.state == Constants.INACTIVE) {
         _logoutUser(context);
         return;
@@ -70,10 +87,11 @@ class HomeScreen extends StatelessWidget {
         Provider.of<UiState>(context, listen: false).setIsAdmin(isAdmin: false);
       }
     }
-    debugPrint('Getting Vehicle List.');
     if (appData.availableVehicles.isEmpty) {
+      debugPrint('Getting Vehicle List.');
       Vehicle().getVehicleList(appData);
     }
+    setState(() {});
   }
 
   void _logoutUser(BuildContext context) {
@@ -109,21 +127,21 @@ class _DrawerElements extends StatelessWidget {
               leading: const Icon(Icons.account_balance_outlined),
               title: Text('Companies', style: drawerTS)),
           ListTile(
-              leading: const Icon(Icons.car_repair),
+              leading: const Icon(Icons.add_road),
               title: Text('Add New Trip', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();
-                uiState.setCenterWidget(const VehiclesScreen());
+                uiState.setCenterWidget(const AddTripScreen());
               }),
           ListTile(
-              leading: const Icon(Icons.car_repair),
+              leading: const Icon(Icons.add_circle_rounded),
               title: Text('Add Fuel', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();
                 uiState.setCenterWidget(const VehiclesScreen());
               }),
           ListTile(
-              leading: const Icon(Icons.car_repair),
+              leading: const Icon(Icons.add_shopping_cart),
               title: Text('Add Expense', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();

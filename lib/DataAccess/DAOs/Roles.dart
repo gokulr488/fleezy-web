@@ -50,7 +50,7 @@ class Roles {
     return getUser(phoneNumber);
   }
 
-  Future<ModelUser?> getUser(String phoneNumber) async {
+  Future<ModelUser?> getUser(String? phoneNumber) async {
     final DocumentSnapshot<ModelUser> snapShot = await fireStore
         .collection(Constants.USERS)
         .doc(phoneNumber)
