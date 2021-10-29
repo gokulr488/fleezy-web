@@ -53,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 const _DrawerElements(),
                 Consumer<UiState>(
                     builder: (BuildContext context, UiState uiState, _) {
-                  return uiState.centerWidget;
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: uiState.centerWidget,
+                  );
                 })
               ],
             )));

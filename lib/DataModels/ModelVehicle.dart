@@ -45,7 +45,7 @@ class ModelVehicle {
   }
 
   static ModelVehicle fromDoc(DocumentSnapshot<Object> doc) {
-    final Map<String, Object> json = doc.data() as Map<String, Object>;
+    final Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
 
     return ModelVehicle(
       vehicleName: (json['VehicleName'] ?? '') as String,
@@ -88,4 +88,7 @@ class ModelVehicle {
     }
     return warning;
   }
+
+  @override
+  String toString() => '$registrationNo - $vehicleName';
 }

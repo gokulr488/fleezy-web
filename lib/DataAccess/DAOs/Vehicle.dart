@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 
@@ -57,27 +58,19 @@ class Vehicle {
     return callContext;
   }
 
-  Future<List<ModelVehicle>> _getVehiclesForUser(ModelUser user) async {
+  Future<List<ModelVehicle>> _getVehiclesInCompany(
+      ModelCompany? selectedCompany) async {
     QuerySnapshot<Map<String, dynamic>> snapShot;
-    if (user.roleName == Constants.ADMIN) {
-      snapShot = await fireStore
-          .collection(Constants.VEHICLES)
-          .where('CompanyId', isEqualTo: user.companyId)
-          .get();
-    } else {
-      snapShot = await fireStore
-          .collection(Constants.VEHICLES)
-          .where('CompanyId', isEqualTo: user.companyId)
-          .where('AllowedDrivers', arrayContains: user.phoneNumber)
-          .get();
-    }
-
+    snapShot = await fireStore
+        .collection(Constants.VEHICLES)
+        .where('CompanyId', isEqualTo: selectedCompany?.companyEmail)
+        .get();
     return ModelVehicle.fromDocs(snapShot);
   }
 
   Future<void> getVehicleList(AppData appData) async {
     final List<ModelVehicle> vehiclesData =
-        await _getVehiclesForUser(appData.user!);
+        await _getVehiclesInCompany(appData.selectedCompany);
     if (vehiclesData.isNotEmpty) {
       appData.setAvailableVehicles(vehiclesData);
     }
