@@ -13,7 +13,9 @@ class BaseCard extends StatelessWidget {
   InkWell build(BuildContext context) {
     return InkWell(
       splashColor: Colors.yellow[400],
-      onTap: () => onTap!(),
+      onTap: () {
+        if (onTap != null) onTap!();
+      },
       child: Card(
         color: color ?? kCardOverlay[elevation] ?? kCardOverlay[4],
         elevation: elevation ?? 4,
