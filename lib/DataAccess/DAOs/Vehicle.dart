@@ -5,7 +5,6 @@ import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/DataModels/ModelCompany.dart';
-import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 
 class Vehicle {
