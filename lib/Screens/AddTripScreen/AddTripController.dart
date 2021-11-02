@@ -13,4 +13,5 @@ class AddTripController {
   final TextEditingController totalAmntCtrl = TextEditingController();
   final TextEditingController paidAmntCtrl = TextEditingController();
   final TextEditingController driverSalCtrl = TextEditingController();
+  DateTime tripStartDate = DateTime.now();
 }

@@ -1,5 +1,8 @@
+import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
+import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Components/CheckBoxWidget.dart';
+import 'package:fleezy_web/Components/DatePicker.dart';
 import 'package:fleezy_web/Components/DriverSearchBox.dart';
 import 'package:fleezy_web/Components/FormFieldWidget.dart';
 import 'package:fleezy_web/Components/VehicleSearchBox.dart';
@@ -42,7 +45,14 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 SizedBox(
                     width: 300,
                     child: DriverSearchBox(onChanged: onDriverSelected)),
-                if (vehicle != null) vehicle!
+                DatePicker(
+                    label: 'Trip Start Date  ',
+                    onTap: () async {
+                      ctrl.tripStartDate = await Utils.pickDate(context);
+                      setState(() {});
+                    },
+                    text: Utils.getFormattedDate(
+                        ctrl.tripStartDate, Constants.kUiDateFormat))
               ]),
         ),
         Row(
