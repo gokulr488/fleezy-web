@@ -23,7 +23,7 @@ class VehicleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseCard(
       cardChild: Row(
-        children: <Widget>[
+        children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: SizedBox(
@@ -39,7 +39,7 @@ class VehicleCard extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Text(vehicle.registrationNo,
                   style: _kRegistrationNumberTextStyle),
               Text(vehicle.vehicleName ?? '', style: _kDriverTextStyle),

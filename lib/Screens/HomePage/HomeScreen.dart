@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return uiState.centerWidget;
             }),
             desktop: Row(
-              children: <Widget>[
+              children: [
                 const _DrawerElements(),
                 Consumer<UiState>(
                     builder: (BuildContext context, UiState uiState, _) {
@@ -117,7 +117,7 @@ class _DrawerElements extends StatelessWidget {
       width: Responsive.isDesktop(context) ? 250 : null,
       color: kActiveCardColor,
       child: ListView(
-        children: <Widget>[
+        children: [
           if (Responsive.isMobile(context))
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

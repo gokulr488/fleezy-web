@@ -5,6 +5,7 @@ import 'package:fleezy_web/Components/CheckBoxWidget.dart';
 import 'package:fleezy_web/Components/DatePicker.dart';
 import 'package:fleezy_web/Components/DriverSearchBox.dart';
 import 'package:fleezy_web/Components/FormFieldWidget.dart';
+import 'package:fleezy_web/Components/RoundedButton.dart';
 import 'package:fleezy_web/Components/VehicleSearchBox.dart';
 import 'package:fleezy_web/Components/cards/VehicleCard.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
@@ -25,81 +26,72 @@ class _AddTripScreenState extends State<AddTripScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                    width: 300,
-                    child: VehicleSearchBox(onChanged: onVehicleSelected)),
-                if (vehicle != null) vehicle!
-              ]),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            SizedBox(
+                width: 300,
+                child: VehicleSearchBox(onChanged: onVehicleSelected)),
+            if (vehicle != null) vehicle!
+          ]),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                    width: 300,
-                    child: DriverSearchBox(onChanged: onDriverSelected)),
-                DatePicker(
-                    label: 'Trip Start Date  ',
-                    onTap: () async {
-                      ctrl.tripStartDate = await Utils.pickDate(context);
-                      setState(() {});
-                    },
-                    text: Utils.getFormattedDate(
-                        ctrl.tripStartDate, Constants.kUiDateFormat))
-              ]),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            SizedBox(
+                width: 300,
+                child: DriverSearchBox(onChanged: onDriverSelected)),
+            DatePicker(
+                label: 'Trip Start Date  ',
+                onTap: () async {
+                  ctrl.tripStartDate = await Utils.pickDate(context);
+                  setState(() {});
+                },
+                text: Utils.getFormattedDate(
+                    ctrl.tripStartDate, Constants.kUiDateFormat))
+          ]),
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FormFieldWidget(
-                  fieldName: 'Starting from',
-                  controller: ctrl.startingFromCtrl),
-              FormFieldWidget(
-                  fieldName: 'Destination', controller: ctrl.destinationCtrl)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FormFieldWidget(
-                  fieldName: 'Start Odometer Reading',
-                  controller: ctrl.startOdoCtrl),
-              FormFieldWidget(
-                  fieldName: 'End Odometer Reading',
-                  controller: ctrl.endOdoCtrl)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FormFieldWidget(
-                  fieldName: 'Customer Name',
-                  controller: ctrl.customerNameCtrl),
-              FormFieldWidget(
-                  fieldName: 'Customer Phone Number',
-                  controller: ctrl.customerPhoneCtrl)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FormFieldWidget(
-                  fieldName: 'Total Bill Amount',
-                  controller: ctrl.totalAmntCtrl),
-              FormFieldWidget(
-                  fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FormFieldWidget(
-                  fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
-              const CheckBoxWidget(fieldName: 'Round Trip')
-            ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          FormFieldWidget(
+              fieldName: 'Starting from', controller: ctrl.startingFromCtrl),
+          FormFieldWidget(
+              fieldName: 'Destination', controller: ctrl.destinationCtrl)
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          FormFieldWidget(
+              fieldName: 'Start Odometer Reading',
+              controller: ctrl.startOdoCtrl),
+          FormFieldWidget(
+              fieldName: 'End Odometer Reading', controller: ctrl.endOdoCtrl)
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          FormFieldWidget(
+              fieldName: 'Customer Name', controller: ctrl.customerNameCtrl),
+          FormFieldWidget(
+              fieldName: 'Customer Phone Number',
+              controller: ctrl.customerPhoneCtrl)
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          FormFieldWidget(
+              fieldName: 'Total Bill Amount', controller: ctrl.totalAmntCtrl),
+          FormFieldWidget(
+              fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl)
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          FormFieldWidget(
+              fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
+          const CheckBoxWidget(fieldName: 'Round Trip')
+        ]),
+        const Spacer(),
+        RoundedButton(
+            title: 'Save Trip',
+            width: 300,
+            onPressed: () {
+              ctrl.onSaveTrip(context);
+            })
       ],
     );
   }

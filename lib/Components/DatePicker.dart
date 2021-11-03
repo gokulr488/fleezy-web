@@ -11,18 +11,18 @@ class DatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: [
         if (label != null)
           Text(label!,
               style:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         BaseCard(
           cardChild: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             height: 40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+              children: [
                 Text(text,
                     style:
                         const TextStyle(fontSize: 20, color: kHighlightColour)),

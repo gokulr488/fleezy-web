@@ -12,7 +12,7 @@ class FormFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
+        children: [
           Text(fieldName,
               style:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),

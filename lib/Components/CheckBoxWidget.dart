@@ -12,17 +12,14 @@ class CheckBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(fieldName,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            Checkbox(
-                activeColor: kHighlightColour,
-                value: initialValue,
-                onChanged: onChanged)
-          ]),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(fieldName,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        Checkbox(
+            activeColor: kHighlightColour,
+            value: initialValue,
+            onChanged: onChanged)
+      ]),
     );
   }
 }

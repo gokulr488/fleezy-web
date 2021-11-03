@@ -12,7 +12,7 @@ class RoundedButton extends StatelessWidget {
   final Color? colour;
   final String title;
   final double? width;
-  final Function onPressed;
+  final Function() onPressed;
   final double? elevation;
 
   @override
@@ -20,10 +20,11 @@ class RoundedButton extends StatelessWidget {
     return Material(
         elevation: elevation ?? 5,
         color: colour ?? kCardOverlay[elevation] ?? kHighlightColour,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(45),
         child: MaterialButton(
-            onPressed: () => onPressed(),
+            onPressed: onPressed,
             minWidth: width ?? MediaQuery.of(context).size.width * 0.75,
+            height: 45,
             child: Text(title,
                 style: const TextStyle(
                     fontSize: 17, fontWeight: FontWeight.bold))));

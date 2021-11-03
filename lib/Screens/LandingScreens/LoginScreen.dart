@@ -41,13 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
       headerText: 'Welcome To Fleezy',
       child: Responsive(
           mobile: Column(
-            children: <Widget>[
+            children: [
               const _ImageWidget(),
               _LoginForm(message: message, ctrl: ctrl),
             ],
           ),
           desktop: Row(
-            children: <Widget>[
+            children: [
               const _ImageWidget(),
               _LoginForm(message: message, ctrl: ctrl),
             ],
@@ -91,7 +91,7 @@ class _LoginForm extends StatelessWidget {
       flex: Responsive.isDesktop(context) ? 1 : 3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
+        children: [
           Text('Fleezy',
               style: GoogleFonts.dancingScript(
                   color: kHighlightColour,

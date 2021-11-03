@@ -22,7 +22,7 @@ class BaseScreen extends StatelessWidget {
               toolbarHeight: 45,
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: [
                     Text(headerText,
                         style: GoogleFonts.laila(
                           color: kTextColor,

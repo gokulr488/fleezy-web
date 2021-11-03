@@ -14,4 +14,6 @@ class AddTripController {
   final TextEditingController paidAmntCtrl = TextEditingController();
   final TextEditingController driverSalCtrl = TextEditingController();
   DateTime tripStartDate = DateTime.now();
+
+  void onSaveTrip(BuildContext context) {}
 }
