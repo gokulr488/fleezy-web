@@ -1,5 +1,4 @@
 import 'package:fleezy_web/Common/Constants.dart';
-import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Components/CheckBoxWidget.dart';
 import 'package:fleezy_web/Components/DatePicker.dart';
@@ -7,7 +6,6 @@ import 'package:fleezy_web/Components/DriverSearchBox.dart';
 import 'package:fleezy_web/Components/FormFieldWidget.dart';
 import 'package:fleezy_web/Components/RoundedButton.dart';
 import 'package:fleezy_web/Components/VehicleSearchBox.dart';
-import 'package:fleezy_web/Components/cards/VehicleCard.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:fleezy_web/Screens/AddTripScreen/AddTripController.dart';
@@ -25,22 +23,17 @@ class _AddTripScreenState extends State<AddTripScreen> {
   Widget? vehicle;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             SizedBox(
                 width: 300,
                 child: VehicleSearchBox(onChanged: onVehicleSelected)),
             if (vehicle != null) vehicle!
           ]),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             SizedBox(
                 width: 300,
                 child: DriverSearchBox(onChanged: onDriverSelected)),
@@ -53,59 +46,52 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 text: Utils.getFormattedDate(
                     ctrl.tripStartDate, Constants.kUiDateFormat))
           ]),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          FormFieldWidget(
-              fieldName: 'Starting from', controller: ctrl.startingFromCtrl),
-          FormFieldWidget(
-              fieldName: 'Destination', controller: ctrl.destinationCtrl)
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          FormFieldWidget(
-              fieldName: 'Start Odometer Reading',
-              controller: ctrl.startOdoCtrl),
-          FormFieldWidget(
-              fieldName: 'End Odometer Reading', controller: ctrl.endOdoCtrl)
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          FormFieldWidget(
-              fieldName: 'Customer Name', controller: ctrl.customerNameCtrl),
-          FormFieldWidget(
-              fieldName: 'Customer Phone Number',
-              controller: ctrl.customerPhoneCtrl)
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          FormFieldWidget(
-              fieldName: 'Total Bill Amount', controller: ctrl.totalAmntCtrl),
-          FormFieldWidget(
-              fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl)
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          FormFieldWidget(
-              fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
-          const CheckBoxWidget(fieldName: 'Round Trip')
-        ]),
-        const Spacer(),
-        RoundedButton(
-            title: 'Save Trip',
-            width: 300,
-            onPressed: () {
-              ctrl.onSaveTrip(context);
-            })
-      ],
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FormFieldWidget(
+                fieldName: 'Starting from', controller: ctrl.startingFromCtrl),
+            FormFieldWidget(
+                fieldName: 'Destination', controller: ctrl.destinationCtrl)
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FormFieldWidget(
+                fieldName: 'Start Odometer Reading',
+                controller: ctrl.startOdoCtrl),
+            FormFieldWidget(
+                fieldName: 'End Odometer Reading', controller: ctrl.endOdoCtrl)
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FormFieldWidget(
+                fieldName: 'Customer Name', controller: ctrl.customerNameCtrl),
+            FormFieldWidget(
+                fieldName: 'Customer Phone Number',
+                controller: ctrl.customerPhoneCtrl)
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FormFieldWidget(
+                fieldName: 'Total Bill Amount', controller: ctrl.totalAmntCtrl),
+            FormFieldWidget(
+                fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl)
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FormFieldWidget(
+                fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
+            const CheckBoxWidget(fieldName: 'Round Trip')
+          ]),
+          const Spacer(),
+          RoundedButton(
+              title: 'Save Trip',
+              width: 300,
+              onPressed: () {
+                ctrl.onSaveTrip(context);
+              })
+        ],
+      ),
     );
-  }
-
-  VehicleCard buildVehicleCard(ModelVehicle vehicle) {
-    return VehicleCard(
-        vehicle: vehicle,
-        color: vehicle.isInTrip ? kActiveCardColor : kCardOverlay[4],
-        message: vehicle.getWarningMessage());
   }
 
   void onVehicleSelected(ModelVehicle? vehicleModel) {
     if (vehicleModel != null) {
-      vehicle = buildVehicleCard(vehicleModel);
+      vehicle = ctrl.buildVehicleCard(vehicleModel);
     }
     setState(() {});
   }

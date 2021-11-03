@@ -1,3 +1,6 @@
+import 'package:fleezy_web/Common/UiConstants.dart';
+import 'package:fleezy_web/Components/cards/VehicleCard.dart';
+import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/material.dart';
 
 class AddTripController {
@@ -16,4 +19,11 @@ class AddTripController {
   DateTime tripStartDate = DateTime.now();
 
   void onSaveTrip(BuildContext context) {}
+
+  VehicleCard buildVehicleCard(ModelVehicle vehicle) {
+    return VehicleCard(
+        vehicle: vehicle,
+        color: vehicle.isInTrip ? kActiveCardColor : kCardOverlay[4],
+        message: vehicle.getWarningMessage());
+  }
 }

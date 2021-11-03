@@ -12,6 +12,7 @@ import 'package:fleezy_web/DataAccess/DAOs/Roles.dart';
 import 'package:fleezy_web/DataAccess/DAOs/Vehicle.dart';
 import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Screens/AddFuelScreen/AddFuelScreen.dart';
 import 'package:fleezy_web/Screens/AddTripScreen/AddTripScreen.dart';
 import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
@@ -143,7 +144,7 @@ class _DrawerElements extends StatelessWidget {
               title: Text('Add Fuel', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();
-                uiState.setCenterWidget(const VehiclesScreen());
+                uiState.setCenterWidget(const AddFuelScreen());
               }),
           ListTile(
               leading: const Icon(Icons.add_shopping_cart),
