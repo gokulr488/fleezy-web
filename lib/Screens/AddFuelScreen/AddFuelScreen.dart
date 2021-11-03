@@ -53,7 +53,9 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
           SizedBox(
             width: 300,
             child: DropDown(
-                onChanged: () {},
+                onChanged: (value) {
+                  print(value);
+                },
                 defaultValue: 'CASH',
                 values: const <String>['CASH', 'BPL Card', 'Debit Card']),
           ),

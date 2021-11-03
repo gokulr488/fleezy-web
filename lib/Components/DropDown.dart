@@ -7,7 +7,7 @@ class DropDown extends StatelessWidget {
       required this.defaultValue,
       required this.values,
       this.hintText});
-  final Function onChanged;
+  final Function(String?) onChanged;
   final String defaultValue;
   final List<String> values;
   final String? hintText;
@@ -22,7 +22,7 @@ class DropDown extends StatelessWidget {
       iconSize: 25,
       decoration: kTextFieldDecoration.copyWith(labelText: hintText ?? ''),
       value: defaultValue,
-      onChanged: (String? value) => onChanged(value),
+      onChanged: onChanged,
       items: values
           .map((String value) =>
               DropdownMenuItem<String>(value: value, child: Text(value)))
