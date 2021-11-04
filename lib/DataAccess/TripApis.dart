@@ -15,6 +15,31 @@ class TripApis {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   CallContext callContext = CallContext();
 
+  Future<CallContext> saveTrip(
+      ModelTrip trip, ModelVehicle vehicle, BuildContext context) async {
+    final ModelCompany company =
+        Provider.of<AppData>(context, listen: false).selectedCompany!;
+    final WriteBatch batch = fireStore.batch();
+    final DocumentReference<Map<String, dynamic>> tripRef = fireStore
+        .collection(Constants.COMPANIES)
+        .doc(company.companyEmail)
+        .collection(Constants.TRIP)
+        .doc();
+    trip.id = tripRef.id;
+    batch.set(tripRef, trip.toJson());
+
+    final DocumentReference<Map<String, dynamic>> vehicleRef =
+        fireStore.collection(Constants.VEHICLES).doc(vehicle.registrationNo);
+    vehicle.latestOdometerReading = trip.endReading!;
+    vehicle.currentDriver = trip.driverName;
+    batch.update(vehicleRef, vehicle.toJson());
+    await batch
+        .commit()
+        .then((dynamic value) => callContext.setSuccess('Trip Added'))
+        .catchError((dynamic error) => callContext.setError('$error'));
+    return callContext;
+  }
+
   Future<CallContext> startNewTrip(
       ModelTrip trip, ModelVehicle vehicle, BuildContext context) async {
     final ModelUser user = Provider.of<AppData>(context, listen: false).user!;

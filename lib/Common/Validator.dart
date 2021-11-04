@@ -28,8 +28,8 @@ class Validator {
     return true;
   }
 
-  bool fileObject(File? file, String errorMessage, BuildContext context) {
-    if (file == null) {
+  bool object(Object? obj, String errorMessage, BuildContext context) {
+    if (obj == null) {
       showErrorAlert(context, errorMessage);
       throw Exception(errorMessage);
     }

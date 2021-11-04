@@ -87,3 +87,20 @@ void showWarningAlert(
     },
   );
 }
+
+void showInfoAlert(BuildContext context, String infoMessage) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Alerts(
+        title: 'Info',
+        actions: [
+          Text(infoMessage, style: const TextStyle(fontSize: 18)),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK')),
+        ],
+      );
+    },
+  );
+}

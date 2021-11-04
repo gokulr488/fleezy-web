@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelTrip {
   ModelTrip(
-      {required this.id,
+      {this.id,
       required this.startDate,
       this.endDate,
       required this.startReading,
@@ -22,7 +22,7 @@ class ModelTrip {
       this.status,
       this.isRoundTrip,
       this.customerPhone});
-  String id;
+  String? id;
   String? driverName;
   String driverUid;
   Timestamp startDate;

@@ -33,6 +33,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 child: VehicleSearchBox(onChanged: onVehicleSelected)),
             if (vehicle != null) vehicle!
           ]),
+          const SizedBox(height: 10),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             SizedBox(
                 width: 300,
@@ -92,6 +93,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
   void onVehicleSelected(ModelVehicle? vehicleModel) {
     if (vehicleModel != null) {
       vehicle = ctrl.buildVehicleCard(vehicleModel);
+      ctrl.vehicleDo = vehicleModel;
     }
     setState(() {});
   }
