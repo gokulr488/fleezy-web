@@ -76,7 +76,14 @@ class _AddTripScreenState extends State<AddTripScreen> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             FormFieldWidget(
                 fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
-            const CheckBoxWidget(fieldName: 'Round Trip')
+            CheckBoxWidget(
+              fieldName: 'Round Trip',
+              initialValue: ctrl.isRoundTrip,
+              onChanged: (bool? value) {
+                ctrl.isRoundTrip = value ?? false;
+                setState(() {});
+              },
+            )
           ]),
           const Spacer(),
           RoundedButton(

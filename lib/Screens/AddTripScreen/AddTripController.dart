@@ -47,6 +47,22 @@ class AddTripController {
   void _valid(BuildContext context) {
     validate.object(vehicleDo, 'Please choose Vehicle', context);
     validate.object(driverDo, 'Please choose Driver', context);
+    validate.stringField(
+        startingFromCtrl.text, 'Starting From cannot be empty', context);
+    validate.stringField(
+        destinationCtrl.text, 'Destination cannot be empty', context);
+    validate.stringField(
+        startOdoCtrl.text, 'Odometer Start cannot be empty', context);
+    validate.stringField(
+        endOdoCtrl.text, 'Odometer End cannot be empty', context);
+    validate.stringField(
+        customerNameCtrl.text, 'Customer Name cannot be empty', context);
+    validate.stringField(
+        totalAmntCtrl.text, 'Total Amount cannot be empty', context);
+    validate.stringField(
+        paidAmntCtrl.text, 'Received Amount cannot be empty', context);
+    validate.stringField(
+        driverSalCtrl.text, 'Driver salary cannot be empty', context);
   }
 
   VehicleCard buildVehicleCard(ModelVehicle vehicle) {

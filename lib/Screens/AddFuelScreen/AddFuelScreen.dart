@@ -27,7 +27,6 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             SizedBox(
@@ -50,14 +49,18 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
                     ctrl.tripStartDate, Constants.kUiDateFormat))
           ]),
           const SizedBox(height: 10),
-          SizedBox(
-            width: 300,
-            child: DropDown(
-                onChanged: (value) {
-                  print(value);
-                },
-                defaultValue: 'CASH',
-                values: const <String>['CASH', 'BPL Card', 'Debit Card']),
+          Row(
+            children: [
+              SizedBox(
+                width: 300,
+                child: DropDown(
+                    onChanged: (value) {
+                      debugPrint(value);
+                    },
+                    defaultValue: 'CASH',
+                    values: const <String>['CASH', 'BPL Card', 'Debit Card']),
+              ),
+            ],
           ),
           FormFieldWidget(
               fieldName: 'Total Amount', controller: ctrl.totalAmntCtrl),
