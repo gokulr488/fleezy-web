@@ -62,10 +62,12 @@ class Roles {
     return snapShot.data();
   }
 
-  Future<List<ModelUser>> getAllUsersInCompany(String companyId) async {
+  Future<List<ModelUser>> getUsersByStatus(
+      String companyId, String status) async {
     final QuerySnapshot<ModelUser> snapshot = await fireStore
         .collection(Constants.USERS)
-        .where('CompanyId', isEqualTo: companyId)
+        .where('CompanyId', arrayContains: companyId)
+        .where('State', isEqualTo: status)
         .withConverter<ModelUser>(
           fromFirestore: (snapshots, _) =>
               ModelUser.fromJson(snapshots.data()!),

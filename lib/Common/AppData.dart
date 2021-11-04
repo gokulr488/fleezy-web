@@ -5,17 +5,17 @@ import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppData extends ChangeNotifier {
-  List<ModelVehicle> _availableVehicles = <ModelVehicle>[];
-  final Map<String, List<ModelTrip>> _tripHistory = <String, List<ModelTrip>>{};
-  Map<String, List<ModelTrip>> _pendingBalance = <String, List<ModelTrip>>{};
-  Map<String, ModelUser>? _drivers;
+  List<ModelVehicle> _availableVehicles = [];
+  final Map<String, List<ModelTrip>> _tripHistory = {};
+  Map<String, List<ModelTrip>> _pendingBalance = {};
+  Map<String, ModelUser> _drivers = {};
   ModelUser? _user;
   ModelTrip? _trip;
   ModelCompany? _selectedCompany;
 
   //GETTERS
   List<ModelVehicle> get availableVehicles => _availableVehicles;
-  List<ModelUser>? get drivers => _drivers?.values.toList();
+  List<ModelUser> get drivers => _drivers.values.toList();
   ModelUser? get user => _user;
   ModelTrip? get trip => _trip;
   ModelCompany? get selectedCompany => _selectedCompany;
@@ -73,16 +73,13 @@ class AppData extends ChangeNotifier {
   }
 
   void addNewDriver(ModelUser user) {
-    _drivers ??= <String, ModelUser>{};
-    _drivers?[user.phoneNumber] = user;
+    _drivers[user.phoneNumber] = user;
     notifyListeners();
   }
 
   void setDrivers(List<ModelUser> users) {
-    _drivers ??= <String, ModelUser>{};
-
     for (final ModelUser user in users) {
-      _drivers?[user.phoneNumber] = user;
+      _drivers[user.phoneNumber] = user;
     }
     notifyListeners();
   }
@@ -103,7 +100,7 @@ class AppData extends ChangeNotifier {
   }
 
   void updateDriver(ModelUser user) {
-    _drivers?.update(user.phoneNumber, (ModelUser value) => user);
+    _drivers.update(user.phoneNumber, (ModelUser value) => user);
     notifyListeners();
   }
 }

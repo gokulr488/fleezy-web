@@ -16,8 +16,8 @@ class AddTripController {
       TextEditingController(text: 'Vallarpadam');
   final TextEditingController destinationCtrl =
       TextEditingController(text: 'Maruthoorkadavu');
-  final TextEditingController startOdoCtrl = TextEditingController(text: '0');
-  final TextEditingController endOdoCtrl = TextEditingController(text: '0');
+  final TextEditingController startOdoCtrl = TextEditingController();
+  final TextEditingController endOdoCtrl = TextEditingController();
   final TextEditingController customerNameCtrl =
       TextEditingController(text: 'Amritha Agencies');
   final TextEditingController customerPhoneCtrl = TextEditingController();

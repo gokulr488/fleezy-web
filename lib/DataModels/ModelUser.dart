@@ -56,5 +56,5 @@ class ModelUser {
   }
 
   @override
-  String toString() => '$fullName - $phoneNumber';
+  String toString() => '$fullName  $phoneNumber';
 }

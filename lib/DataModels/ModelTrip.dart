@@ -43,27 +43,27 @@ class ModelTrip {
   String? status;
   bool? isRoundTrip = false;
 
-  Map<String, Object> toJson() {
-    return <String, Object>{
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
       'StartDate': startDate,
-      'EndDate': endDate!,
+      'EndDate': endDate,
       'StartReading': startReading,
-      'EndReading': endReading!,
-      'Distance': distance!,
-      'BillAmount': billAmount!,
-      'PaidAmount': paidAmount!,
-      'BalanceAmount': balanceAmount!,
-      'DriverSalary': driverSalary!,
-      'CustomerName': customerName!,
-      'TripNo': tripNo!,
+      'EndReading': endReading,
+      'Distance': distance,
+      'BillAmount': billAmount,
+      'PaidAmount': paidAmount,
+      'BalanceAmount': balanceAmount,
+      'DriverSalary': driverSalary,
+      'CustomerName': customerName,
+      'TripNo': tripNo,
       'VehicleRegNo': vehicleRegNo,
       'StartingFrom': startingFrom,
       'Destination': destination,
-      'DriverName': driverName!,
+      'DriverName': driverName,
       'DriverUid': driverUid,
-      'Status': status!,
-      'IsRoundTrip': isRoundTrip!,
-      'CustomerPhone': customerPhone!,
+      'Status': status,
+      'IsRoundTrip': isRoundTrip,
+      'CustomerPhone': customerPhone,
     };
   }
 

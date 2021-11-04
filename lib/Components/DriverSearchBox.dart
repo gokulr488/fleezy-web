@@ -21,7 +21,7 @@ class DriverSearchBox extends StatelessWidget {
       showSelectedItems: true,
       dropdownSearchDecoration:
           kTextFieldDecoration.copyWith(labelText: 'Select Driver'),
-      items: drivers ?? [],
+      items: drivers,
       onChanged: onChanged,
     );
   }

@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    _getUserData();
+    _getBasicData();
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )));
   }
 
-  Future<void> _getUserData() async {
+  Future<void> _getBasicData() async {
     final AppData appData = Provider.of<AppData>(context, listen: false);
     if (appData.user == null) {
       debugPrint('Getting User basic Info.');
@@ -86,8 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       CallContext callContext =
           await Company().getCompanyById(appData.user!.companyId.first);
       if (!callContext.isError) {
-        Provider.of<AppData>(context, listen: false)
-            .setSelectedCompany(callContext.data);
+        appData.setSelectedCompany(callContext.data);
       }
       if (appData.user!.roleName != Constants.ADMIN) {
         Provider.of<UiState>(context, listen: false).setIsAdmin(isAdmin: false);
@@ -96,6 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (appData.availableVehicles.isEmpty) {
       debugPrint('Getting Vehicle List.');
       Vehicle().getVehicleList(appData);
+    }
+    if (appData.drivers.isEmpty) {
+      debugPrint('Getting Active Drivers');
+      List<ModelUser> activeUsers = await Roles().getUsersByStatus(
+          appData.selectedCompany!.companyEmail, Constants.ACTIVE);
+      appData.setDrivers(activeUsers);
     }
     setState(() {});
   }

@@ -98,5 +98,9 @@ class _AddTripScreenState extends State<AddTripScreen> {
     setState(() {});
   }
 
-  void onDriverSelected(ModelUser? driver) {}
+  void onDriverSelected(ModelUser? driver) {
+    if (driver != null) {
+      ctrl.driverDo = driver;
+    }
+  }
 }
