@@ -8,7 +8,7 @@ class AppData extends ChangeNotifier {
   List<ModelVehicle> _availableVehicles = [];
   final Map<String, List<ModelTrip>> _tripHistory = {};
   Map<String, List<ModelTrip>> _pendingBalance = {};
-  Map<String, ModelUser> _drivers = {};
+  final Map<String, ModelUser> _drivers = {};
   ModelUser? _user;
   ModelTrip? _trip;
   ModelCompany? _selectedCompany;

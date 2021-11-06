@@ -1,6 +1,5 @@
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
-import 'package:fleezy_web/Components/CheckBoxWidget.dart';
 import 'package:fleezy_web/Components/DatePicker.dart';
 import 'package:fleezy_web/Components/DriverSearchBox.dart';
 import 'package:fleezy_web/Components/DropDown.dart';

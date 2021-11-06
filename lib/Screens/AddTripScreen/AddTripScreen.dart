@@ -83,7 +83,16 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 ctrl.isRoundTrip = value ?? false;
                 setState(() {});
               },
-            )
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            RoundedButton(
+                title: 'Select Image',
+                width: 300,
+                onPressed: () {
+                  ctrl.onChooseFilePressed(context);
+                }),
+            _getPhotoWidget()
           ]),
           const Spacer(),
           RoundedButton(
@@ -94,6 +103,16 @@ class _AddTripScreenState extends State<AddTripScreen> {
               })
         ],
       ),
+    );
+  }
+
+  Widget _getPhotoWidget() {
+    return SizedBox(
+      width: 300,
+      child: Center(
+          child: (ctrl.filePickerRes == null)
+              ? const Text('Bill Image not Selected')
+              : Text(ctrl.filePickerRes!.files.first.name)),
     );
   }
 

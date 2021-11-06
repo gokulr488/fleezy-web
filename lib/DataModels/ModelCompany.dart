@@ -29,11 +29,11 @@ class ModelCompany {
       'CompanyName': company.companyName,
       'CompanyEmail': company.companyEmail,
       'Password': company.password,
-      'Vehicles': company.vehicles,
+      //'Vehicles': company.vehicles,
       'PhoneNumber': company.phoneNumber,
       'Users': _getListOfUsers(company.users),
-      'Expense': company.expense,
-      'Trip': company.trip
+      //'Expense': company.expense,
+      //'Trip': company.trip
     };
   }
 

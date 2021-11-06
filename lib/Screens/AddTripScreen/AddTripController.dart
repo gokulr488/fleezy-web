@@ -1,3 +1,5 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
@@ -30,6 +32,9 @@ class AddTripController {
   ModelVehicle? vehicleDo;
   ModelUser? driverDo;
 
+  FilePickerResult? filePickerRes;
+  UploadTask? uploadTask;
+
   Future<void> onSaveTrip(BuildContext context) async {
     try {
       _valid(context);
@@ -45,6 +50,7 @@ class AddTripController {
   }
 
   void _valid(BuildContext context) {
+    // TODO validate number fields and also double to int conversions wherevere necessary
     validate.object(vehicleDo, 'Please choose Vehicle', context);
     validate.object(driverDo, 'Please choose Driver', context);
     validate.stringField(
@@ -52,9 +58,9 @@ class AddTripController {
     validate.stringField(
         destinationCtrl.text, 'Destination cannot be empty', context);
     validate.stringField(
-        startOdoCtrl.text, 'Odometer Start cannot be empty', context);
+        startOdoCtrl.text, 'Start Odometer reading cannot be empty', context);
     validate.stringField(
-        endOdoCtrl.text, 'Odometer End cannot be empty', context);
+        endOdoCtrl.text, 'End Odometer reading cannot be empty', context);
     validate.stringField(
         customerNameCtrl.text, 'Customer Name cannot be empty', context);
     validate.stringField(
@@ -97,5 +103,9 @@ class AddTripController {
       balanceAmount: totalAmnt - paidAmnt,
     );
     return tripDo;
+  }
+
+  void onChooseFilePressed(BuildContext context) async {
+    filePickerRes = await FilePicker.platform.pickFiles();
   }
 }
