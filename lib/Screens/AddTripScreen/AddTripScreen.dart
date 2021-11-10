@@ -89,8 +89,9 @@ class _AddTripScreenState extends State<AddTripScreen> {
             RoundedButton(
                 title: 'Select Image',
                 width: 300,
-                onPressed: () {
-                  ctrl.onChooseFilePressed(context);
+                onPressed: () async {
+                  await ctrl.onChooseFilePressed(context);
+                  setState(() {});
                 }),
             _getPhotoWidget()
           ]),
@@ -107,12 +108,12 @@ class _AddTripScreenState extends State<AddTripScreen> {
   }
 
   Widget _getPhotoWidget() {
+    String text = (ctrl.filePickerRes == null)
+        ? 'Bill Image not Selected'
+        : ctrl.filePickerRes!.files.first.name;
     return SizedBox(
-      width: 300,
-      child: Center(
-          child: (ctrl.filePickerRes == null)
-              ? const Text('Bill Image not Selected')
-              : Text(ctrl.filePickerRes!.files.first.name)),
+      width: 400,
+      child: Center(child: Text(text, style: const TextStyle(fontSize: 16))),
     );
   }
 

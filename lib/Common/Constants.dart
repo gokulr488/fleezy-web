@@ -15,6 +15,7 @@ class Constants {
   static const String ENDED = 'Ended';
 
   static const String FUEL_BILLS_FOLDER = 'fuel_bills/';
+  static const String TRIP_BILLS_FOLDER = 'trip_bills/';
 
   static const String FUEL = 'Fuel';
   static const String SERVICE = 'Service';

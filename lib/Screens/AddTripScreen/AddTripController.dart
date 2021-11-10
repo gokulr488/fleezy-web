@@ -7,10 +7,12 @@ import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Common/Validator.dart';
 import 'package:fleezy_web/Components/cards/VehicleCard.dart';
+import 'package:fleezy_web/DataAccess/FirebaseStorageService.dart';
 import 'package:fleezy_web/DataAccess/TripApis.dart';
 import 'package:fleezy_web/DataModels/ModelTrip.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
+
 import 'package:flutter/material.dart';
 
 class AddTripController {
@@ -39,6 +41,8 @@ class AddTripController {
     try {
       _valid(context);
       final ModelTrip tripDo = buildTripDo();
+      uploadTask = FirebaseStorageService.uploadPickerRes(
+          Constants.TRIP_BILLS_FOLDER, filePickerRes);
       CallContext callContext =
           await TripApis().saveTrip(tripDo, vehicleDo!, context);
       if (!callContext.isError) {
@@ -51,6 +55,7 @@ class AddTripController {
 
   void _valid(BuildContext context) {
     // TODO validate number fields and also double to int conversions wherevere necessary
+    validate.object(filePickerRes, 'Choose Bill image', context);
     validate.object(vehicleDo, 'Please choose Vehicle', context);
     validate.object(driverDo, 'Please choose Driver', context);
     validate.stringField(
@@ -105,7 +110,7 @@ class AddTripController {
     return tripDo;
   }
 
-  void onChooseFilePressed(BuildContext context) async {
+  Future<void> onChooseFilePressed(BuildContext context) async {
     filePickerRes = await FilePicker.platform.pickFiles();
   }
 }
