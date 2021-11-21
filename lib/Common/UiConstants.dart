@@ -23,18 +23,18 @@ const Duration kAnimDuraction = Duration(milliseconds: 350);
 const Cubic kAnimCurve = Curves.easeOut;
 
 const InputDecoration kTextFieldDecoration = InputDecoration(
-  labelStyle: TextStyle(fontSize: 18),
+  labelStyle: TextStyle(fontSize: 14),
   contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(25)),
+    borderRadius: BorderRadius.all(Radius.circular(22)),
   ),
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: kHighlightColour),
-    borderRadius: BorderRadius.all(Radius.circular(25)),
+    borderRadius: BorderRadius.all(Radius.circular(22)),
   ),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Color(0xFFd84315), width: 2),
-    borderRadius: BorderRadius.all(Radius.circular(25)),
+    borderRadius: BorderRadius.all(Radius.circular(22)),
   ),
 );
 

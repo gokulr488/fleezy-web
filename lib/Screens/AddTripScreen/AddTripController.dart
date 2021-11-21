@@ -54,7 +54,6 @@ class AddTripController {
   }
 
   void _valid(BuildContext context) {
-    // TODO validate number fields and also double to int conversions wherevere necessary
     validate.object(filePickerRes, 'Choose Bill image', context);
     validate.object(vehicleDo, 'Please choose Vehicle', context);
     validate.object(driverDo, 'Please choose Driver', context);
@@ -63,17 +62,21 @@ class AddTripController {
     validate.stringField(
         destinationCtrl.text, 'Destination cannot be empty', context);
     validate.stringField(
-        startOdoCtrl.text, 'Start Odometer reading cannot be empty', context);
+        startOdoCtrl.text, 'Invalid Start Odometer reading', context,
+        isNumber: true);
     validate.stringField(
-        endOdoCtrl.text, 'End Odometer reading cannot be empty', context);
+        endOdoCtrl.text, 'Invalid End Odometer reading', context,
+        isNumber: true);
     validate.stringField(
         customerNameCtrl.text, 'Customer Name cannot be empty', context);
+    validate.stringField(totalAmntCtrl.text, 'Invalid Total Amount', context,
+        isNumber: true);
     validate.stringField(
-        totalAmntCtrl.text, 'Total Amount cannot be empty', context);
+        paidAmntCtrl.text, 'Invalid Received Amount cannot be empty', context,
+        isNumber: true);
     validate.stringField(
-        paidAmntCtrl.text, 'Received Amount cannot be empty', context);
-    validate.stringField(
-        driverSalCtrl.text, 'Driver salary cannot be empty', context);
+        driverSalCtrl.text, 'Invalid Driver salary cannot be empty', context,
+        isNumber: true);
   }
 
   VehicleCard buildVehicleCard(ModelVehicle vehicle) {
@@ -84,13 +87,13 @@ class AddTripController {
   }
 
   ModelTrip buildTripDo() {
-    int endOdo = int.parse(endOdoCtrl.text);
-    int startOdo = int.parse(startOdoCtrl.text);
+    int endOdo = double.parse(endOdoCtrl.text).toInt();
+    int startOdo = double.parse(startOdoCtrl.text).toInt();
     double totalAmnt = double.parse(totalAmntCtrl.text);
     double paidAmnt = double.parse(paidAmntCtrl.text);
     final ModelTrip tripDo = ModelTrip(
       startDate: Utils.getTimeStamp(tripStartDate),
-      startReading: int.parse(startOdoCtrl.text),
+      startReading: startOdo,
       vehicleRegNo: vehicleDo!.registrationNo,
       driverUid: driverDo!.uid!,
       startingFrom: startingFromCtrl.text,

@@ -10,10 +10,18 @@ class Validator {
     return true;
   }
 
-  bool stringField(String? value, String errorMessage, BuildContext context) {
+  bool stringField(String? value, String errorMessage, BuildContext context,
+      {bool isNumber = false}) {
     if (value == null || value.isEmpty) {
       showErrorAlert(context, errorMessage);
       throw Exception(errorMessage);
+    }
+    if (isNumber) {
+      double? num = double.tryParse(value);
+      if (num == null) {
+        showErrorAlert(context, errorMessage);
+        throw Exception(errorMessage);
+      }
     }
     return true;
   }

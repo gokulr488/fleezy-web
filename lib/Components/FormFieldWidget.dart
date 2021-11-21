@@ -16,10 +16,10 @@ class FormFieldWidget extends StatelessWidget {
         children: [
           Text(fieldName,
               style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           const SizedBox(width: 10),
           SizedBox(
-            width: Responsive.isMobile(context) ? 200 : 400,
+            width: Responsive.isMobile(context) ? 200 : 350,
             height: 45,
             child: TextFormField(
               controller: controller,

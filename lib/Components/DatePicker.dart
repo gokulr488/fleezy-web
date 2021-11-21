@@ -15,7 +15,7 @@ class DatePicker extends StatelessWidget {
         if (label != null)
           Text(label!,
               style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         BaseCard(
           cardChild: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -23,7 +23,7 @@ class DatePicker extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(text, style: const TextStyle(fontSize: 20)),
+                Text(text, style: const TextStyle(fontSize: 16)),
                 const Icon(Icons.date_range, color: kHighlightColour, size: 30)
               ],
             ),
