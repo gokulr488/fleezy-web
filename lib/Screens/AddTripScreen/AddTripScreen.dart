@@ -25,67 +25,24 @@ class _AddTripScreenState extends State<AddTripScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
+      child: Row(
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-                width: 300,
-                child: VehicleSearchBox(onChanged: onVehicleSelected)),
-            if (vehicle != null) vehicle!
-          ]),
-          const SizedBox(height: 10),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-                width: 300,
-                child: DriverSearchBox(onChanged: onDriverSelected)),
-            DatePicker(
-                label: 'Trip Start Date  ',
-                onTap: () async {
-                  ctrl.tripStartDate = await Utils.pickDate(context);
-                  setState(() {});
-                },
-                text: Utils.getFormattedDate(
-                    ctrl.tripStartDate, Constants.kUiDateFormat))
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Expanded(
+              child: Column(children: [
+            VehicleSearchBox(onChanged: onVehicleSelected),
+            const SizedBox(height: 52),
+            DriverSearchBox(onChanged: onDriverSelected),
             FormFieldWidget(
                 fieldName: 'Starting from', controller: ctrl.startingFromCtrl),
-            FormFieldWidget(
-                fieldName: 'Destination', controller: ctrl.destinationCtrl)
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             FormFieldWidget(
                 fieldName: 'Start Odometer Reading',
                 controller: ctrl.startOdoCtrl),
             FormFieldWidget(
-                fieldName: 'End Odometer Reading', controller: ctrl.endOdoCtrl)
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            FormFieldWidget(
                 fieldName: 'Customer Name', controller: ctrl.customerNameCtrl),
-            FormFieldWidget(
-                fieldName: 'Customer Phone Number',
-                controller: ctrl.customerPhoneCtrl)
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             FormFieldWidget(
                 fieldName: 'Total Bill Amount', controller: ctrl.totalAmntCtrl),
             FormFieldWidget(
-                fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl)
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            FormFieldWidget(
                 fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
-            CheckBoxWidget(
-              fieldName: 'Round Trip',
-              initialValue: ctrl.isRoundTrip,
-              onChanged: (bool? value) {
-                ctrl.isRoundTrip = value ?? false;
-                setState(() {});
-              },
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             RoundedButton(
                 title: 'Select Image',
                 width: 300,
@@ -93,15 +50,46 @@ class _AddTripScreenState extends State<AddTripScreen> {
                   await ctrl.onChooseFilePressed(context);
                   setState(() {});
                 }),
-            _getPhotoWidget()
-          ]),
-          const Spacer(),
-          RoundedButton(
-              title: 'Save Trip',
-              width: 300,
-              onPressed: () {
-                ctrl.onSaveTrip(context);
-              })
+          ])),
+          Expanded(
+            child: Column(children: [
+              vehicle != null ? vehicle! : const SizedBox(height: 110),
+              DatePicker(
+                  label: 'Trip Start Date  ',
+                  onTap: () async {
+                    ctrl.tripStartDate = await Utils.pickDate(context);
+                    setState(() {});
+                  },
+                  text: Utils.getFormattedDate(
+                      ctrl.tripStartDate, Constants.kUiDateFormat)),
+              FormFieldWidget(
+                  fieldName: 'Destination', controller: ctrl.destinationCtrl),
+              FormFieldWidget(
+                  fieldName: 'End Odometer Reading',
+                  controller: ctrl.endOdoCtrl),
+              FormFieldWidget(
+                  fieldName: 'Customer Phone Number',
+                  controller: ctrl.customerPhoneCtrl),
+              FormFieldWidget(
+                  fieldName: 'Received Amount', controller: ctrl.paidAmntCtrl),
+              CheckBoxWidget(
+                fieldName: 'Round Trip',
+                initialValue: ctrl.isRoundTrip,
+                onChanged: (bool? value) {
+                  ctrl.isRoundTrip = value ?? false;
+                  setState(() {});
+                },
+              ),
+              _getPhotoWidget(),
+              const Spacer(),
+              RoundedButton(
+                  title: 'Save Trip',
+                  width: 300,
+                  onPressed: () {
+                    ctrl.onSaveTrip(context);
+                  })
+            ]),
+          ),
         ],
       ),
     );

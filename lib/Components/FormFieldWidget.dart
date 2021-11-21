@@ -18,9 +18,7 @@ class FormFieldWidget extends StatelessWidget {
               style:
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           const SizedBox(width: 10),
-          SizedBox(
-            width: Responsive.isMobile(context) ? 200 : 350,
-            height: 45,
+          Expanded(
             child: TextFormField(
               controller: controller,
               decoration: kTextFieldDecoration,

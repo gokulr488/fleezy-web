@@ -13,16 +13,19 @@ class DriverSearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ModelUser>? drivers =
         Provider.of<AppData>(context, listen: false).drivers;
-    return DropdownSearch<ModelUser>(
-      compareFn: compareFn,
-      showClearButton: true,
-      showSearchBox: true,
-      mode: Mode.MENU,
-      showSelectedItems: true,
-      dropdownSearchDecoration:
-          kTextFieldDecoration.copyWith(labelText: 'Select Driver'),
-      items: drivers,
-      onChanged: onChanged,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: DropdownSearch<ModelUser>(
+        compareFn: compareFn,
+        showClearButton: true,
+        showSearchBox: true,
+        mode: Mode.MENU,
+        showSelectedItems: true,
+        dropdownSearchDecoration:
+            kTextFieldDecoration.copyWith(labelText: 'Select Driver'),
+        items: drivers,
+        onChanged: onChanged,
+      ),
     );
   }
 

@@ -13,16 +13,19 @@ class VehicleSearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ModelVehicle> vehicles =
         Provider.of<AppData>(context, listen: false).availableVehicles;
-    return DropdownSearch<ModelVehicle>(
-      compareFn: compareFn,
-      showClearButton: true,
-      showSearchBox: true,
-      mode: Mode.MENU,
-      showSelectedItems: true,
-      dropdownSearchDecoration:
-          kTextFieldDecoration.copyWith(labelText: 'Choose Vehicle'),
-      items: vehicles,
-      onChanged: onChanged,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: DropdownSearch<ModelVehicle>(
+        compareFn: compareFn,
+        showClearButton: true,
+        showSearchBox: true,
+        mode: Mode.MENU,
+        showSelectedItems: true,
+        dropdownSearchDecoration:
+            kTextFieldDecoration.copyWith(labelText: 'Choose Vehicle'),
+        items: vehicles,
+        onChanged: onChanged,
+      ),
     );
   }
 
