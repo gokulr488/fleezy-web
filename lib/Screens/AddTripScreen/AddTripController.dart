@@ -91,6 +91,7 @@ class AddTripController {
     int startOdo = double.parse(startOdoCtrl.text).toInt();
     double totalAmnt = double.parse(totalAmntCtrl.text);
     double paidAmnt = double.parse(paidAmntCtrl.text);
+    String imagePath = uploadTask!.snapshot.ref.fullPath;
     final ModelTrip tripDo = ModelTrip(
       startDate: Utils.getTimeStamp(tripStartDate),
       startReading: startOdo,
@@ -109,7 +110,7 @@ class AddTripController {
       paidAmount: paidAmnt,
       status: Constants.ENDED,
       balanceAmount: totalAmnt - paidAmnt,
-      //TODO image path needs to be added
+      imagePath: imagePath,
     );
     return tripDo;
   }

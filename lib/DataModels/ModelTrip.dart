@@ -1,27 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelTrip {
-  ModelTrip(
-      {this.id,
-      required this.startDate,
-      this.endDate,
-      required this.startReading,
-      this.endReading,
-      this.distance,
-      this.billAmount,
-      this.paidAmount,
-      this.balanceAmount,
-      this.driverSalary,
-      this.customerName,
-      this.tripNo,
-      required this.vehicleRegNo,
-      this.driverName,
-      required this.driverUid,
-      required this.startingFrom,
-      required this.destination,
-      this.status,
-      this.isRoundTrip,
-      this.customerPhone});
+  ModelTrip({
+    this.id,
+    required this.startDate,
+    this.endDate,
+    required this.startReading,
+    this.endReading,
+    this.distance,
+    this.billAmount,
+    this.paidAmount,
+    this.balanceAmount,
+    this.driverSalary,
+    this.customerName,
+    this.tripNo,
+    required this.vehicleRegNo,
+    this.driverName,
+    required this.driverUid,
+    required this.startingFrom,
+    required this.destination,
+    this.status,
+    this.isRoundTrip,
+    this.customerPhone,
+    this.imagePath,
+  });
   String? id;
   String? driverName;
   String driverUid;
@@ -42,6 +44,7 @@ class ModelTrip {
   String destination;
   String? status;
   bool? isRoundTrip = false;
+  String? imagePath;
 
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -64,6 +67,7 @@ class ModelTrip {
       'Status': status,
       'IsRoundTrip': isRoundTrip,
       'CustomerPhone': customerPhone,
+      'ImagePath': imagePath,
     };
   }
 
@@ -91,6 +95,7 @@ class ModelTrip {
       status: (json['Status'] ?? '') as String,
       isRoundTrip: (json['IsRoundTrip'] ?? false) as bool,
       customerPhone: (json['CustomerPhone'] ?? '') as String,
+      imagePath: (json['ImagePath'] ?? '') as String,
     );
   }
 
