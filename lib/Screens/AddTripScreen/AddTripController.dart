@@ -109,6 +109,7 @@ class AddTripController {
       paidAmount: paidAmnt,
       status: Constants.ENDED,
       balanceAmount: totalAmnt - paidAmnt,
+      //TODO image path needs to be added
     );
     return tripDo;
   }

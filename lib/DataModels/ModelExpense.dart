@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelExpense {
   ModelExpense(
-      {required this.id,
+      {this.id,
       required this.expenseType,
       required this.amount,
       required this.timestamp,
@@ -20,7 +20,7 @@ class ModelExpense {
       required this.odometerReading,
       this.imagePath});
 
-  String id;
+  String? id;
   String expenseType;
   double amount;
   Timestamp timestamp;
@@ -43,24 +43,24 @@ class ModelExpense {
   String? vehicleRegNo; //Doc ID of Model vehicle
   String? imagePath;
 
-  Map<String, Object> toJson() {
-    return <String, Object>{
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
       'expenseType': expenseType,
       'amount': amount,
       'timestamp': timestamp,
-      'tripNo': tripNo!,
-      'payMode': payMode!,
-      'fuelUnitPrice': fuelUnitPrice!,
-      'fuelQty': fuelQty!,
-      'isFullTank': isFullTank!,
+      'tripNo': tripNo,
+      'payMode': payMode,
+      'fuelUnitPrice': fuelUnitPrice,
+      'fuelQty': fuelQty,
+      'isFullTank': isFullTank,
       'odometerReading': odometerReading,
-      'insuranceExpiryDate': insuranceExpiryDate!,
-      'policyNumber': policyNumber!,
-      'taxExpiryDate': taxExpiryDate!,
-      'driverName': driverName!,
-      'expenseDetails': expenseDetails!,
-      'vehicleRegNo': vehicleRegNo!,
-      'imagePath': imagePath!,
+      'insuranceExpiryDate': insuranceExpiryDate,
+      'policyNumber': policyNumber,
+      'taxExpiryDate': taxExpiryDate,
+      'driverName': driverName,
+      'expenseDetails': expenseDetails,
+      'vehicleRegNo': vehicleRegNo,
+      'imagePath': imagePath,
     };
   }
 

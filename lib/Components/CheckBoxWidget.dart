@@ -14,7 +14,7 @@ class CheckBoxWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(fieldName,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         Checkbox(
             activeColor: kHighlightColour,
             value: initialValue,
