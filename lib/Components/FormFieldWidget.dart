@@ -1,5 +1,4 @@
 import 'package:fleezy_web/Common/UiConstants.dart';
-import 'package:fleezy_web/Components/Responsive.dart';
 import 'package:flutter/material.dart';
 
 class FormFieldWidget extends StatelessWidget {
@@ -10,7 +9,7 @@ class FormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

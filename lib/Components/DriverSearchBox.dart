@@ -14,7 +14,7 @@ class DriverSearchBox extends StatelessWidget {
     List<ModelUser>? drivers =
         Provider.of<AppData>(context, listen: false).drivers;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: DropdownSearch<ModelUser>(
         compareFn: compareFn,
         showClearButton: true,

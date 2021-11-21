@@ -14,19 +14,22 @@ class DropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      icon: const Icon(
-        Icons.arrow_drop_down_circle_outlined,
-        color: kHighlightColour,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+      child: DropdownButtonFormField<String>(
+        icon: const Icon(
+          Icons.arrow_drop_down_circle_outlined,
+          color: kHighlightColour,
+        ),
+        iconSize: 25,
+        decoration: kTextFieldDecoration.copyWith(labelText: hintText ?? ''),
+        value: defaultValue,
+        onChanged: onChanged,
+        items: values
+            .map((String value) =>
+                DropdownMenuItem<String>(value: value, child: Text(value)))
+            .toList(),
       ),
-      iconSize: 25,
-      decoration: kTextFieldDecoration.copyWith(labelText: hintText ?? ''),
-      value: defaultValue,
-      onChanged: onChanged,
-      items: values
-          .map((String value) =>
-              DropdownMenuItem<String>(value: value, child: Text(value)))
-          .toList(),
     );
   }
 }

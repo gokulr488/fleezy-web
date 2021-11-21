@@ -30,7 +30,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
           Expanded(
               child: Column(children: [
             VehicleSearchBox(onChanged: onVehicleSelected),
-            const SizedBox(height: 52),
+            const SizedBox(height: 32),
             DriverSearchBox(onChanged: onDriverSelected),
             FormFieldWidget(
                 fieldName: 'Starting from', controller: ctrl.startingFromCtrl),

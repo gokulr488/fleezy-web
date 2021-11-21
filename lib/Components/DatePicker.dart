@@ -13,6 +13,7 @@ class DatePicker extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (label != null)
             Text(label!,

@@ -24,20 +24,30 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: Column(
-        children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-                width: 300,
-                child: VehicleSearchBox(onChanged: onVehicleSelected)),
-            if (vehicle != null) vehicle!
-          ]),
-          const SizedBox(height: 10),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-                width: 300,
-                child: DriverSearchBox(onChanged: onDriverSelected)),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(children: [
+          Expanded(
+              child: Column(children: [
+            VehicleSearchBox(onChanged: onVehicleSelected),
+            DriverSearchBox(onChanged: onDriverSelected),
+            DropDown(
+                onChanged: (value) {
+                  debugPrint(value);
+                },
+                defaultValue: 'CASH',
+                values: const <String>['CASH', 'BPL Card', 'Debit Card']),
+            FormFieldWidget(
+                fieldName: 'Total Amount', controller: ctrl.totalAmntCtrl),
+            FormFieldWidget(
+                fieldName: 'Price Per Litre', controller: ctrl.fuelRateCtrl),
+            FormFieldWidget(
+                fieldName: 'Litres filled', controller: ctrl.litresFilledCtrl),
+            FormFieldWidget(
+                fieldName: 'Odometer Reading', controller: ctrl.odoReadingCtrl),
+          ])),
+          Expanded(
+              child: Column(children: [
+            if (vehicle != null) vehicle!,
             DatePicker(
                 label: 'Date  ',
                 onTap: () async {
@@ -45,40 +55,16 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
                   setState(() {});
                 },
                 text: Utils.getFormattedDate(
-                    ctrl.tripStartDate, Constants.kUiDateFormat))
-          ]),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(
+                    ctrl.tripStartDate, Constants.kUiDateFormat)),
+            const Spacer(),
+            RoundedButton(
+                title: 'Add fuel expense',
                 width: 300,
-                child: DropDown(
-                    onChanged: (value) {
-                      debugPrint(value);
-                    },
-                    defaultValue: 'CASH',
-                    values: const <String>['CASH', 'BPL Card', 'Debit Card']),
-              ),
-            ],
-          ),
-          FormFieldWidget(
-              fieldName: 'Total Amount', controller: ctrl.totalAmntCtrl),
-          FormFieldWidget(
-              fieldName: 'Price Per Litre', controller: ctrl.fuelRateCtrl),
-          FormFieldWidget(
-              fieldName: 'Litres filled', controller: ctrl.litresFilledCtrl),
-          FormFieldWidget(
-              fieldName: 'Odometer Reading', controller: ctrl.odoReadingCtrl),
-          const Spacer(),
-          RoundedButton(
-              title: 'Add fuel expense',
-              width: 300,
-              onPressed: () {
-                ctrl.onAddFuel(context);
-              })
-        ],
-      ),
-    );
+                onPressed: () {
+                  ctrl.onAddFuel(context);
+                })
+          ]))
+        ]));
   }
 
   void onVehicleSelected(ModelVehicle? vehicleModel) {

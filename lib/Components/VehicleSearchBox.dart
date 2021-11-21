@@ -14,7 +14,7 @@ class VehicleSearchBox extends StatelessWidget {
     List<ModelVehicle> vehicles =
         Provider.of<AppData>(context, listen: false).availableVehicles;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: DropdownSearch<ModelVehicle>(
         compareFn: compareFn,
         showClearButton: true,
