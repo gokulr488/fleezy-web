@@ -24,6 +24,7 @@ const Cubic kAnimCurve = Curves.easeOut;
 
 const InputDecoration kTextFieldDecoration = InputDecoration(
   labelStyle: TextStyle(fontSize: 14),
+  hintStyle: TextStyle(fontSize: 14),
   contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(22)),

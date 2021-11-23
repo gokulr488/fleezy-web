@@ -39,51 +39,61 @@ class AddTripController {
 
   Future<void> onSaveTrip(BuildContext context) async {
     try {
-      _valid(context);
-      uploadTask = FirebaseStorageService.uploadPickerRes(
-          Constants.TRIP_BILLS_FOLDER, filePickerRes);
-      final ModelTrip tripDo = buildTripDo();
-      CallContext callContext =
-          await TripApis().saveTrip(tripDo, vehicleDo!, context);
-      Navigator.pop(context);
-      if (!callContext.isError) {
-        showInfoAlert(context, 'Succesfully saved Trip');
+      if (_valid(context)) {
+        showSendingDialogue(context);
+        uploadTask = FirebaseStorageService.uploadPickerRes(
+            Constants.TRIP_BILLS_FOLDER, filePickerRes);
+        final ModelTrip tripDo = buildTripDo();
+        CallContext callContext =
+            await TripApis().saveTrip(tripDo, vehicleDo!, context);
+        Navigator.pop(context);
+        if (!callContext.isError) {
+          showInfoAlert(context, 'Succesfully saved Trip');
+        }
       }
     } catch (e) {
+      Navigator.pop(context);
       debugPrint('Error Saving Trip: ' + e.toString());
+      showErrorAlert(context, 'Error Saving Trip: ' + e.toString());
     }
   }
 
-  void _valid(BuildContext context) {
-    validate.object(filePickerRes, 'Choose Bill image', context);
-    validate.object(vehicleDo, 'Please choose Vehicle', context);
-    validate.object(driverDo, 'Please choose Driver', context);
-    validate.stringField(
-        startingFromCtrl.text, 'Starting From cannot be empty', context);
-    validate.stringField(
-        destinationCtrl.text, 'Destination cannot be empty', context);
-    validate.stringField(
-        startOdoCtrl.text, 'Invalid Start Odometer reading', context,
-        isNumber: true);
-    validate.stringField(
-        endOdoCtrl.text, 'Invalid End Odometer reading', context,
-        isNumber: true);
-    validate.stringField(
-        customerNameCtrl.text, 'Customer Name cannot be empty', context);
-    validate.stringField(totalAmntCtrl.text, 'Invalid Total Amount', context,
-        isNumber: true);
-    validate.stringField(
-        paidAmntCtrl.text, 'Invalid Received Amount cannot be empty', context,
-        isNumber: true);
-    validate.stringField(
-        driverSalCtrl.text, 'Invalid Driver salary cannot be empty', context,
-        isNumber: true);
-    int? endodoReading = double.tryParse(endOdoCtrl.text)?.toInt();
-    validate.odometerReading(
-        endodoReading, vehicleDo!.latestOdometerReading, context);
-    int? startOdoReading = double.tryParse(startOdoCtrl.text)?.toInt();
-    validate.odometerReading(
-        startOdoReading, vehicleDo!.latestOdometerReading, context);
+  bool _valid(BuildContext context) {
+    try {
+      validate.object(filePickerRes, 'Choose Bill image', context);
+      validate.object(vehicleDo, 'Please choose Vehicle', context);
+      validate.object(driverDo, 'Please choose Driver', context);
+      validate.stringField(
+          startingFromCtrl.text, 'Starting From cannot be empty', context);
+      validate.stringField(
+          destinationCtrl.text, 'Destination cannot be empty', context);
+      validate.stringField(
+          startOdoCtrl.text, 'Invalid Start Odometer reading', context,
+          isNumber: true);
+      validate.stringField(
+          endOdoCtrl.text, 'Invalid End Odometer reading', context,
+          isNumber: true);
+      validate.stringField(
+          customerNameCtrl.text, 'Customer Name cannot be empty', context);
+      validate.stringField(totalAmntCtrl.text, 'Invalid Total Amount', context,
+          isNumber: true);
+      validate.stringField(
+          paidAmntCtrl.text, 'Invalid Received Amount cannot be empty', context,
+          isNumber: true);
+      validate.stringField(
+          driverSalCtrl.text, 'Invalid Driver salary cannot be empty', context,
+          isNumber: true);
+      int? endodoReading = double.tryParse(endOdoCtrl.text)?.toInt();
+      validate.odometerReading(
+          endodoReading, vehicleDo!.latestOdometerReading, context);
+      int? startOdoReading = double.tryParse(startOdoCtrl.text)?.toInt();
+      validate.odometerReading(
+          startOdoReading, vehicleDo!.latestOdometerReading, context);
+      return true;
+    } catch (e) {
+      debugPrint('Error Saving Trip: ' + e.toString());
+      return false;
+    }
   }
 
   VehicleCard buildVehicleCard(ModelVehicle vehicle) {

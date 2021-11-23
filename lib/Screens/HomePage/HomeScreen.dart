@@ -12,6 +12,7 @@ import 'package:fleezy_web/DataAccess/DAOs/Roles.dart';
 import 'package:fleezy_web/DataAccess/DAOs/Vehicle.dart';
 import 'package:fleezy_web/DataModels/ModelCompany.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
+import 'package:fleezy_web/Screens/AddExpenseScreen/AddExpenseScreen.dart';
 import 'package:fleezy_web/Screens/AddFuelScreen/AddFuelScreen.dart';
 import 'package:fleezy_web/Screens/AddTripScreen/AddTripScreen.dart';
 import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
@@ -156,7 +157,7 @@ class _DrawerElements extends StatelessWidget {
               title: Text('Add Expense', style: drawerTS),
               onTap: () {
                 if (Responsive.isMobile(context)) Navigator.of(context).pop();
-                uiState.setCenterWidget(const VehiclesScreen());
+                uiState.setCenterWidget(const AddExpenseScreen());
               }),
           ListTile(
               leading: const Icon(Icons.car_repair),

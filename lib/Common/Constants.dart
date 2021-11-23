@@ -16,12 +16,14 @@ class Constants {
 
   static const String FUEL_BILLS_FOLDER = 'fuel_bills/';
   static const String TRIP_BILLS_FOLDER = 'trip_bills/';
+  static const String EXPENSE_BILLS_FOLDER = 'expense_bills/';
 
   static const String FUEL = 'Fuel';
   static const String SERVICE = 'Service';
   static const String REPAIR = 'Repair';
   static const String SPARE_PARTS = 'Spare Parts';
   static const String FINES = 'Fines';
+  static const String FASTAG = 'Fastag';
   static const String DRIVER_SALARY = 'Driver Salary';
   static const String OTHER_EXP = 'Other Expense';
   static const String TAX_EXP = 'Tax Payment';
@@ -40,6 +42,7 @@ class Constants {
     SERVICE,
     REPAIR,
     SPARE_PARTS,
+    FASTAG,
     FINES,
     OTHER_EXP
   ];

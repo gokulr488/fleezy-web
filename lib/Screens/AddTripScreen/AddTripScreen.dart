@@ -1,4 +1,3 @@
-import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Components/CheckBoxWidget.dart';
@@ -46,7 +45,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 fieldName: 'Driver Salary', controller: ctrl.driverSalCtrl),
             RoundedButton(
                 title: 'Select Image',
-                width: 300,
+                width: 150,
                 onPressed: () async {
                   await ctrl.onChooseFilePressed(context);
                   setState(() {});
@@ -86,10 +85,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
               RoundedButton(
                   title: 'Save Trip',
                   width: 300,
-                  onPressed: () {
-                    showSendingDialogue(context);
-                    ctrl.onSaveTrip(context);
-                  })
+                  onPressed: () => ctrl.onSaveTrip(context))
             ]),
           ),
         ],
@@ -111,6 +107,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
     if (vehicleModel != null) {
       vehicle = ctrl.buildVehicleCard(vehicleModel);
       ctrl.vehicleDo = vehicleModel;
+      ctrl.startOdoCtrl.text = vehicleModel.latestOdometerReading.toString();
     }
     setState(() {});
   }

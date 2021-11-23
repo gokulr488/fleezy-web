@@ -14,21 +14,20 @@ import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/material.dart';
 
-class AddFuelController {
-  final TextEditingController totalAmntCtrl = TextEditingController();
-  final TextEditingController fuelRateCtrl = TextEditingController();
-  final TextEditingController litresFilledCtrl = TextEditingController();
+class AddExpenseController {
+  final TextEditingController amntCtrl = TextEditingController();
   final TextEditingController odoReadingCtrl = TextEditingController();
+  final TextEditingController expenseDetailCtrl = TextEditingController();
   ModelVehicle? vehicleDo;
   ModelUser? driverDo;
-  bool isFullTank = false;
-  String? payMode = 'CASH';
 
-  DateTime fuelAddedDate = DateTime.now();
+  DateTime expenseAddedDate = DateTime.now();
   final Validator validate = Validator();
 
   FilePickerResult? filePickerRes;
   UploadTask? uploadTask;
+
+  String expenseType = Constants.FASTAG;
 
   VehicleCard buildVehicleCard(ModelVehicle vehicle) {
     return VehicleCard(
@@ -37,42 +36,24 @@ class AddFuelController {
         message: vehicle.getWarningMessage());
   }
 
-  void calcLitresFilled() {
-    double? amount = double.tryParse(totalAmntCtrl.text);
-    double? rate = double.tryParse(fuelRateCtrl.text);
-    if (amount != null && rate != null) {
-      double litres = amount / rate;
-      litresFilledCtrl.text = litres.toStringAsFixed(3);
-    }
-  }
-
-  void calcPricePerLitre() {
-    double? amount = double.tryParse(totalAmntCtrl.text);
-    double? litres = double.tryParse(litresFilledCtrl.text);
-    if (amount != null && litres != null) {
-      double rate = amount / litres;
-      fuelRateCtrl.text = rate.toStringAsFixed(3);
-    }
-  }
-
-  Future<void> onAddFuel(BuildContext context) async {
+  Future<void> onAddExpense(BuildContext context) async {
     try {
       if (_valid(context)) {
         showSendingDialogue(context);
         uploadTask = FirebaseStorageService.uploadPickerRes(
-            Constants.FUEL_BILLS_FOLDER, filePickerRes);
+            Constants.EXPENSE_BILLS_FOLDER, filePickerRes);
         final ModelExpense expenseDo = buildExpenseDo();
         CallContext callContext =
             await ExpenseApis().addNewExpense(expenseDo, vehicleDo!, context);
         if (!callContext.isError) {
           Navigator.pop(context);
-          showInfoAlert(context, 'Succesfully Added Fuel');
+          showInfoAlert(context, 'Succesfully Added Expense');
         }
       }
     } catch (e) {
       Navigator.pop(context);
-      debugPrint('Error Adding Fuel: ' + e.toString());
-      showErrorAlert(context, 'Error Adding Fuel: ' + e.toString());
+      debugPrint('Error Adding Expense: ' + e.toString());
+      showErrorAlert(context, 'Error Adding Expense: ' + e.toString());
     }
   }
 
@@ -81,13 +62,7 @@ class AddFuelController {
       validate.object(filePickerRes, 'Choose Bill image', context);
       validate.object(vehicleDo, 'Please choose Vehicle', context);
       validate.object(driverDo, 'Please choose Driver', context);
-      validate.stringField(totalAmntCtrl.text, 'Invalid Total Amount', context,
-          isNumber: true);
-      validate.stringField(
-          fuelRateCtrl.text, 'Invalid Price per litre', context,
-          isNumber: true);
-      validate.stringField(
-          litresFilledCtrl.text, 'Invalid Litres Filles', context,
+      validate.stringField(amntCtrl.text, 'Invalid Total Amount', context,
           isNumber: true);
       validate.stringField(
           odoReadingCtrl.text, 'Invalid Odometer reading', context,
@@ -97,28 +72,23 @@ class AddFuelController {
           odoReading, vehicleDo!.latestOdometerReading, context);
       return true;
     } catch (e) {
-      debugPrint('Error Adding Fuel: ' + e.toString());
+      debugPrint('Error Adding Expense: ' + e.toString());
       return false;
     }
   }
 
   ModelExpense buildExpenseDo() {
     int odoReading = double.parse(odoReadingCtrl.text).toInt();
-    double amount = double.parse(totalAmntCtrl.text);
-    double fuelQty = double.parse(litresFilledCtrl.text);
-    double unitPrice = double.parse(fuelRateCtrl.text);
+    double amount = double.parse(amntCtrl.text);
     String imagePath = uploadTask!.snapshot.ref.fullPath;
     final ModelExpense expenseDo = ModelExpense(
         amount: amount,
-        expenseType: Constants.FUEL,
+        expenseType: expenseType,
         odometerReading: odoReading,
-        timestamp: Utils.getTimeStamp(fuelAddedDate),
+        timestamp: Utils.getTimeStamp(expenseAddedDate),
         driverName: driverDo!.fullName,
-        fuelQty: fuelQty,
-        fuelUnitPrice: unitPrice,
         imagePath: imagePath,
-        isFullTank: isFullTank,
-        payMode: payMode,
+        expenseDetails: expenseDetailCtrl.text,
         vehicleRegNo: vehicleDo!.registrationNo);
     return expenseDo;
   }

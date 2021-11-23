@@ -1,7 +1,7 @@
 import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/Constants.dart';
+import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
-import 'package:fleezy_web/Components/CheckBoxWidget.dart';
 import 'package:fleezy_web/Components/DatePicker.dart';
 import 'package:fleezy_web/Components/DriverSearchBox.dart';
 import 'package:fleezy_web/Components/DropDown.dart';
@@ -10,18 +10,18 @@ import 'package:fleezy_web/Components/RoundedButton.dart';
 import 'package:fleezy_web/Components/VehicleSearchBox.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
-import 'package:fleezy_web/Screens/AddFuelScreen/AddFuelController.dart';
+import 'package:fleezy_web/Screens/AddExpenseScreen/AddExpenseController.dart';
 import 'package:flutter/material.dart';
 
-class AddFuelScreen extends StatefulWidget {
-  const AddFuelScreen();
+class AddExpenseScreen extends StatefulWidget {
+  const AddExpenseScreen();
 
   @override
-  State<AddFuelScreen> createState() => _AddFuelScreenState();
+  State<AddExpenseScreen> createState() => _AddExpenseScreenState();
 }
 
-class _AddFuelScreenState extends State<AddFuelScreen> {
-  AddFuelController ctrl = AddFuelController();
+class _AddExpenseScreenState extends State<AddExpenseScreen> {
+  AddExpenseController ctrl = AddExpenseController();
   Widget? vehicle;
   @override
   Widget build(BuildContext context) {
@@ -34,18 +34,13 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
             const SizedBox(height: 30),
             DriverSearchBox(onChanged: onDriverSelected),
             DropDown(
-                onChanged: (value) => ctrl.payMode = value,
-                defaultValue: 'CASH',
-                values: const <String>['CASH', 'BPL Card', 'Debit Card', 'UPI'],
-                hintText: 'Payment Mode'),
+                onChanged: (value) => ctrl.expenseType = value!,
+                defaultValue: Constants.FASTAG,
+                values: Constants.EXPENSE_TYPES,
+                hintText: 'Expense Type'),
+            FormFieldWidget(fieldName: 'Amount', controller: ctrl.amntCtrl),
             FormFieldWidget(
-                fieldName: 'Total Amount',
-                controller: ctrl.totalAmntCtrl,
-                onChanged: (val) => ctrl.calcLitresFilled()),
-            FormFieldWidget(
-                fieldName: 'Price Per Litre',
-                controller: ctrl.fuelRateCtrl,
-                onChanged: (val) => ctrl.calcLitresFilled()),
+                fieldName: 'Odometer Reading', controller: ctrl.odoReadingCtrl),
             RoundedButton(
                 title: 'Select Image',
                 width: 150,
@@ -60,31 +55,24 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
             DatePicker(
                 label: 'Date  ',
                 onTap: () async {
-                  ctrl.fuelAddedDate = await Utils.pickDate(context);
+                  ctrl.expenseAddedDate = await Utils.pickDate(context);
                   setState(() {});
                 },
                 text: Utils.getFormattedDate(
-                    ctrl.fuelAddedDate, Constants.kUiDateFormat)),
-            CheckBoxWidget(
-              fieldName: 'Full Tank',
-              initialValue: ctrl.isFullTank,
-              onChanged: (bool? value) {
-                ctrl.isFullTank = value ?? false;
-                setState(() {});
-              },
-            ),
-            FormFieldWidget(
-                fieldName: 'Litres filled',
-                controller: ctrl.litresFilledCtrl,
-                onChanged: (val) => ctrl.calcPricePerLitre()),
-            FormFieldWidget(
-                fieldName: 'Odometer Reading', controller: ctrl.odoReadingCtrl),
+                    ctrl.expenseAddedDate, Constants.kUiDateFormat)),
+            const SizedBox(height: 15),
+            TextFormField(
+                minLines: 7,
+                maxLines: 8,
+                controller: ctrl.expenseDetailCtrl,
+                decoration: kTextFieldDecoration.copyWith(
+                    labelText: 'Details of Expense')),
             _getPhotoWidget(),
             const Spacer(),
             RoundedButton(
                 title: 'Add fuel expense',
                 width: 300,
-                onPressed: () => ctrl.onAddFuel(context))
+                onPressed: () => ctrl.onAddExpense(context))
           ]))
         ]));
   }
