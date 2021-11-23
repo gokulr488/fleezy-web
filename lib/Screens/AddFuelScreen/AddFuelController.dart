@@ -15,9 +15,10 @@ import 'package:fleezy_web/DataModels/ModelVehicle.dart';
 import 'package:flutter/material.dart';
 
 class AddFuelController {
-  final TextEditingController totalAmntCtrl = TextEditingController();
-  final TextEditingController fuelRateCtrl = TextEditingController();
-  final TextEditingController litresFilledCtrl = TextEditingController();
+  final TextEditingController totalAmntCtrl = TextEditingController(text: '0');
+  final TextEditingController fuelRateCtrl = TextEditingController(text: '0');
+  final TextEditingController litresFilledCtrl =
+      TextEditingController(text: '0');
   final TextEditingController odoReadingCtrl = TextEditingController();
   ModelVehicle? vehicleDo;
   ModelUser? driverDo;
@@ -37,7 +38,24 @@ class AddFuelController {
         message: vehicle.getWarningMessage());
   }
 
-//TODO auto update values based on fule calculations
+  void calcLitresFilled() {
+    double? amount = double.tryParse(totalAmntCtrl.text);
+    double? rate = double.tryParse(fuelRateCtrl.text);
+    if (amount != null && rate != null) {
+      double litres = amount / rate;
+      litresFilledCtrl.text = litres.toStringAsFixed(3);
+    }
+  }
+
+  void calcPricePerLitre() {
+    double? amount = double.tryParse(totalAmntCtrl.text);
+    double? litres = double.tryParse(litresFilledCtrl.text);
+    if (amount != null && litres != null) {
+      double rate = amount / litres;
+      fuelRateCtrl.text = rate.toStringAsFixed(3);
+    }
+  }
+
   Future<void> onAddFuel(BuildContext context) async {
     try {
       _valid(context);
@@ -47,6 +65,7 @@ class AddFuelController {
       CallContext callContext =
           await ExpenseApis().addNewExpense(expenseDo, vehicleDo!, context);
       if (!callContext.isError) {
+        Navigator.pop(context);
         showInfoAlert(context, 'Succesfully Added Fuel');
       }
     } catch (e) {
@@ -68,13 +87,16 @@ class AddFuelController {
     validate.stringField(
         odoReadingCtrl.text, 'Invalid Odometer reading', context,
         isNumber: true);
+    int? odoReading = double.tryParse(odoReadingCtrl.text)?.toInt();
+    validate.odometerReading(
+        odoReading, vehicleDo!.latestOdometerReading, context);
   }
 
   ModelExpense buildExpenseDo() {
     int odoReading = double.parse(odoReadingCtrl.text).toInt();
     double amount = double.parse(totalAmntCtrl.text);
     double fuelQty = double.parse(litresFilledCtrl.text);
-    double untiPrice = double.parse(fuelRateCtrl.text);
+    double unitPrice = double.parse(fuelRateCtrl.text);
     String imagePath = uploadTask!.snapshot.ref.fullPath;
     final ModelExpense expenseDo = ModelExpense(
         amount: amount,
@@ -83,7 +105,7 @@ class AddFuelController {
         timestamp: Utils.getTimeStamp(fuelAddedDate),
         driverName: driverDo!.fullName,
         fuelQty: fuelQty,
-        fuelUnitPrice: untiPrice,
+        fuelUnitPrice: unitPrice,
         imagePath: imagePath,
         isFullTank: isFullTank,
         payMode: payMode,

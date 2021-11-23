@@ -1,3 +1,4 @@
+import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Components/CheckBoxWidget.dart';
@@ -37,9 +38,13 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
                 defaultValue: 'CASH',
                 values: const <String>['CASH', 'BPL Card', 'Debit Card']),
             FormFieldWidget(
-                fieldName: 'Total Amount', controller: ctrl.totalAmntCtrl),
+                fieldName: 'Total Amount',
+                controller: ctrl.totalAmntCtrl,
+                onChanged: (val) => ctrl.calcLitresFilled()),
             FormFieldWidget(
-                fieldName: 'Price Per Litre', controller: ctrl.fuelRateCtrl),
+                fieldName: 'Price Per Litre',
+                controller: ctrl.fuelRateCtrl,
+                onChanged: (val) => ctrl.calcLitresFilled()),
             RoundedButton(
                 title: 'Select Image',
                 width: 300,
@@ -68,7 +73,9 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
               },
             ),
             FormFieldWidget(
-                fieldName: 'Litres filled', controller: ctrl.litresFilledCtrl),
+                fieldName: 'Litres filled',
+                controller: ctrl.litresFilledCtrl,
+                onChanged: (val) => ctrl.calcPricePerLitre()),
             FormFieldWidget(
                 fieldName: 'Odometer Reading', controller: ctrl.odoReadingCtrl),
             _getPhotoWidget(),
@@ -77,6 +84,7 @@ class _AddFuelScreenState extends State<AddFuelScreen> {
                 title: 'Add fuel expense',
                 width: 300,
                 onPressed: () {
+                  showSendingDialogue(context);
                   ctrl.onAddFuel(context);
                 })
           ]))

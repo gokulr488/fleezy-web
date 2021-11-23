@@ -2,9 +2,11 @@ import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:flutter/material.dart';
 
 class FormFieldWidget extends StatelessWidget {
-  const FormFieldWidget({required this.fieldName, required this.controller});
+  const FormFieldWidget(
+      {required this.fieldName, required this.controller, this.onChanged});
   final String fieldName;
   final TextEditingController controller;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class FormFieldWidget extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               decoration: kTextFieldDecoration,
+              onChanged: onChanged,
             ),
           ),
         ],

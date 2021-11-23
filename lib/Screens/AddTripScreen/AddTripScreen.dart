@@ -1,3 +1,4 @@
+import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Components/CheckBoxWidget.dart';
@@ -86,6 +87,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                   title: 'Save Trip',
                   width: 300,
                   onPressed: () {
+                    showSendingDialogue(context);
                     ctrl.onSaveTrip(context);
                   })
             ]),

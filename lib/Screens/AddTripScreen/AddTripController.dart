@@ -40,11 +40,12 @@ class AddTripController {
   Future<void> onSaveTrip(BuildContext context) async {
     try {
       _valid(context);
-      final ModelTrip tripDo = buildTripDo();
       uploadTask = FirebaseStorageService.uploadPickerRes(
           Constants.TRIP_BILLS_FOLDER, filePickerRes);
+      final ModelTrip tripDo = buildTripDo();
       CallContext callContext =
           await TripApis().saveTrip(tripDo, vehicleDo!, context);
+      Navigator.pop(context);
       if (!callContext.isError) {
         showInfoAlert(context, 'Succesfully saved Trip');
       }
@@ -77,6 +78,12 @@ class AddTripController {
     validate.stringField(
         driverSalCtrl.text, 'Invalid Driver salary cannot be empty', context,
         isNumber: true);
+    int? endodoReading = double.tryParse(endOdoCtrl.text)?.toInt();
+    validate.odometerReading(
+        endodoReading, vehicleDo!.latestOdometerReading, context);
+    int? startOdoReading = double.tryParse(startOdoCtrl.text)?.toInt();
+    validate.odometerReading(
+        startOdoReading, vehicleDo!.latestOdometerReading, context);
   }
 
   VehicleCard buildVehicleCard(ModelVehicle vehicle) {
