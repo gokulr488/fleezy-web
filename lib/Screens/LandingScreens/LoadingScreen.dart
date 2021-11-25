@@ -20,19 +20,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   bool _initialized = false;
   bool _error = false;
   bool _isLoggedIn = false;
-  final bool _isEmulator = true;
+  final bool _isEmulator = false;
 
   void initializeFlutterFire() async {
-    if (_isEmulator) {
-      try {
-        await Firebase.initializeApp();
+    try {
+      await Firebase.initializeApp();
+      if (_isEmulator) {
         FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
         await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
         //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-        _initialized = true;
-      } catch (e) {
-        _error = true;
       }
+      _initialized = true;
+    } catch (e) {
+      _error = true;
     }
     setState(() {});
   }
