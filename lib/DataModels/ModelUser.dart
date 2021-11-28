@@ -14,7 +14,7 @@ class ModelUser {
 
   ModelUser.fromJson(Map<String, dynamic> json)
       : this(
-          uid: json['Uid'] as String,
+          uid: json['Uid'],
           roleName: (json['RoleName'] ?? '') as String,
           fullName: (json['FullName'] ?? '') as String,
           userEmailId: (json['EmailId'] ?? '') as String,
