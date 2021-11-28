@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fleezy_web/Components/BaseScreen.dart';
 import 'package:fleezy_web/Components/LoadingDots.dart';
-import 'package:fleezy_web/Screens/HomePage/HomeScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/ErrorScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoginScreen.dart';
+import 'package:fleezy_web/main.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -19,36 +15,15 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   bool _initialized = false;
   bool _error = false;
-  bool _isLoggedIn = false;
-  final bool _isEmulator = false;
-
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      if (_isEmulator) {
-        FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-        await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-        //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-      }
-      _initialized = true;
-    } catch (e) {
-      _error = true;
-    }
-    setState(() {});
-  }
 
   @override
   void initState() {
-    initializeFlutterFire();
-    checkLoggedInStatus();
+    checkFirebase();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoggedIn) {
-      return HomeScreen();
-    }
     if (_error) {
       return const ErrorScreen();
     }
@@ -61,13 +36,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return LoginScreen();
   }
 
-  void checkLoggedInStatus() {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    if (_auth.currentUser != null) {
-      //Provider.of<UiState>(context, listen: false).setIsAdmin(true);
-      _isLoggedIn = true;
-    } else {
-      _isLoggedIn = false;
+  void checkFirebase() async {
+    try {
+      if (firebase != null) {
+        _initialized = true;
+      }
+    } catch (e) {
+      _error = true;
     }
     setState(() {});
   }

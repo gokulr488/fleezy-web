@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    ctrl.initListener();
+    ctrl.initListener(context);
     ctrl.userSubscription = ctrl.userStream.listen(onUserStreamEvent);
     ctrl.messages.listen(onMessage);
   }
@@ -126,7 +126,7 @@ class _LoginForm extends StatelessWidget {
             onPressed: () async {
               await ctrl.onButtonPressed(context);
             },
-          ),
+          )
         ],
       ),
     );

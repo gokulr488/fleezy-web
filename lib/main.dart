@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fleezy_web/Common/AppData.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
 import 'package:fleezy_web/Common/UiState.dart';
@@ -11,6 +14,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  initializeFlutterFire();
   runApp(MultiProvider(
     // ignore: always_specify_types
     providers: [
@@ -19,6 +23,21 @@ void main() {
     ],
     child: FleezyWebApp(),
   ));
+}
+
+const bool _isEmulator = true;
+FirebaseApp? firebase;
+void initializeFlutterFire() async {
+  try {
+    firebase = await Firebase.initializeApp();
+    if (_isEmulator) {
+      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+      await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+      //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }
 
 class FleezyWebApp extends StatelessWidget {

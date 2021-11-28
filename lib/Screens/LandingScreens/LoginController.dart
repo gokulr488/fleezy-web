@@ -17,6 +17,7 @@ class LoginController {
 
   late Stream<String> messages;
   StreamController<String> streamCtrl = StreamController<String>();
+  late Timer timer;
 
   Authentication auth = Authentication();
   ModelUser? user = ModelUser(
@@ -30,9 +31,11 @@ class LoginController {
   bool verified = false;
   bool disableButton = false;
 
-  void initListener() {
+  void initListener(BuildContext context) {
     userStream = FirebaseAuth.instance.authStateChanges();
     messages = streamCtrl.stream;
+    timer = Timer.periodic(
+        const Duration(seconds: 2), (timer) => checkLogin(context));
   }
 
   Future<void> onVerificationCompleted(BuildContext context) async {
@@ -88,5 +91,15 @@ class LoginController {
 
   void dispose() {
     userSubscription.cancel();
+    timer.cancel();
+  }
+
+  void checkLogin(BuildContext context) {
+    debugPrint('checking Login stat');
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    if (_auth.currentUser != null) {
+      Navigator.pushReplacementNamed(context, HomeScreen.id);
+    }
+    //setState(() {});
   }
 }
