@@ -25,7 +25,7 @@ void main() {
   ));
 }
 
-const bool _isEmulator = true;
+const bool _isEmulator = false;
 FirebaseApp? firebase;
 void initializeFlutterFire() async {
   try {
