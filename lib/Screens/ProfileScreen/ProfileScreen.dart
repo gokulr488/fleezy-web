@@ -104,8 +104,7 @@ class __EditNameWidgetState extends State<_EditNameWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         if (isEditEnabled)
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+          Expanded(
             child: TextFormField(
               keyboardType: TextInputType.name,
               controller: nameController,
