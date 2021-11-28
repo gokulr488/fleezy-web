@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HorLine extends StatelessWidget {
+  const HorLine();
+
   @override
   Widget build(BuildContext context) {
     return Container(

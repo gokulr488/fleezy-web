@@ -17,6 +17,7 @@ import 'package:fleezy_web/Screens/AddFuelScreen/AddFuelScreen.dart';
 import 'package:fleezy_web/Screens/AddTripScreen/AddTripScreen.dart';
 import 'package:fleezy_web/Screens/DriverManagementScreens/DriverManagementScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
+import 'package:fleezy_web/Screens/ProfileScreen/ProfileScreen.dart';
 import 'package:fleezy_web/Screens/VehicleManagementScreen/VehiclesScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -181,7 +182,11 @@ class _DrawerElements extends StatelessWidget {
               title: Text('Reports', style: drawerTS)),
           ListTile(
               leading: const Icon(Icons.account_circle_outlined),
-              title: Text('Profile', style: drawerTS)),
+              title: Text('Profile', style: drawerTS),
+              onTap: () {
+                if (Responsive.isMobile(context)) Navigator.of(context).pop();
+                uiState.setCenterWidget(const ProfileScreen());
+              }),
         ],
       ),
     );

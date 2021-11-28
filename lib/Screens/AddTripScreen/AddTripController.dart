@@ -4,6 +4,7 @@ import 'package:fleezy_web/Common/Alerts.dart';
 import 'package:fleezy_web/Common/CallContext.dart';
 import 'package:fleezy_web/Common/Constants.dart';
 import 'package:fleezy_web/Common/UiConstants.dart';
+import 'package:fleezy_web/Common/UiState.dart';
 import 'package:fleezy_web/Common/Utils.dart';
 import 'package:fleezy_web/Common/Validator.dart';
 import 'package:fleezy_web/Components/cards/VehicleCard.dart';
@@ -12,8 +13,10 @@ import 'package:fleezy_web/DataAccess/TripApis.dart';
 import 'package:fleezy_web/DataModels/ModelTrip.dart';
 import 'package:fleezy_web/DataModels/ModelUser.dart';
 import 'package:fleezy_web/DataModels/ModelVehicle.dart';
+import 'package:fleezy_web/Screens/AddTripScreen/AddTripScreen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddTripController {
   final TextEditingController startingFromCtrl =
@@ -49,6 +52,8 @@ class AddTripController {
         Navigator.pop(context);
         if (!callContext.isError) {
           showInfoAlert(context, 'Succesfully saved Trip');
+          Provider.of<UiState>(context, listen: false)
+              .setCenterWidget(const AddTripScreen());
         }
       }
     } catch (e) {
