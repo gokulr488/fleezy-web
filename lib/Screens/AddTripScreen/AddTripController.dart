@@ -116,6 +116,7 @@ class AddTripController {
     String imagePath = uploadTask!.snapshot.ref.fullPath;
     final ModelTrip tripDo = ModelTrip(
       startDate: Utils.getTimeStamp(tripStartDate),
+      endDate: Utils.getTimeStamp(tripStartDate),
       startReading: startOdo,
       vehicleRegNo: vehicleDo!.registrationNo,
       driverUid: driverDo!.uid!,
