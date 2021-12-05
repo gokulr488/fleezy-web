@@ -9,7 +9,7 @@ const Color kBlueColor = Color(0xFF0d47a1);
 const Color kButtonCardColor = Color(0xFF222222);
 const String kDateFormat = 'dd-MM-yy';
 const String kTimeFormat = 'hh:mm dd-MM-yy';
-const Color kAlertColor = Color(0xFFfbe9e7);
+const Color kAlertColor = Color(0xFF819ca9);
 const Color kActiveTextColor = Color(0xFF000000);
 const Color kActiveCardColor = Color(0xFFdce775);
 

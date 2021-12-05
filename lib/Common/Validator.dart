@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class Validator {
   bool odometerReading(int? userInput, int lastReading, BuildContext context) {
-    if (userInput == null || userInput == 0 || userInput < lastReading) {
+    if (userInput == null || userInput == 0) {
+      //|| userInput < lastReading) {
       showErrorAlert(context, 'Incorrect Odometer Reading');
       throw Exception('Incorrect Odometer Reading');
     }
