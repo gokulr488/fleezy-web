@@ -146,7 +146,9 @@ class TripApis {
       final DocumentReference<Map<String, dynamic>> driverRef =
           fireStore.collection(Constants.USERS).doc(user.phoneNumber);
       user.tripId = null;
-      batch.update(driverRef, user.toJson());
+
+      batch.update(
+          driverRef, ModelUserCollectionReference.toFirestore(user, null));
 
       await batch.commit();
       callContext.setSuccess('Trip Cancelled');

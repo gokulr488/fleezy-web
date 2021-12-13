@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'ModelUser.g.dart';
 
+@JsonSerializable()
 class ModelUser {
   ModelUser(
       {this.uid,
@@ -12,18 +16,6 @@ class ModelUser {
       required this.state,
       this.tripId});
 
-  ModelUser.fromJson(Map<String, dynamic> json)
-      : this(
-          uid: json['Uid'],
-          roleName: (json['RoleName'] ?? '') as String,
-          fullName: (json['FullName'] ?? '') as String,
-          userEmailId: (json['EmailId'] ?? '') as String,
-          phoneNumber: (json['PhoneNumber'] ?? '') as String,
-          companyId: List<String>.from(json['CompanyId'] as List<dynamic>),
-          state: (json['State'] ?? '') as String,
-          tripId: json['TripId'],
-        );
-
   String? uid;
   String roleName; //Avaiable roles Driver,Admin
   String? fullName;
@@ -34,27 +26,9 @@ class ModelUser {
   String state;
   String? tripId;
 
-  Map<String, Object> toJson() {
-    return <String, Object>{
-      'Uid': uid!,
-      'RoleName': roleName,
-      'FullName': fullName ?? '',
-      'EmailId': userEmailId ?? '',
-      'PhoneNumber': phoneNumber,
-      'CompanyId': companyId,
-      'State': state,
-      'TripId': tripId!
-    };
-  }
-
-  static List<ModelUser> getUsersFrom(QuerySnapshot<ModelUser> snapshot) {
-    final List<ModelUser> users = <ModelUser>[];
-    for (final QueryDocumentSnapshot<ModelUser> doc in snapshot.docs) {
-      users.add(doc.data());
-    }
-    return users;
-  }
-
   @override
   String toString() => '$fullName  $phoneNumber';
 }
+
+@Collection<ModelUser>('/Users/')
+final usersRef = ModelUserCollectionReference();
