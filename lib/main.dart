@@ -13,9 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeFlutterFire();
+  await initializeFlutterFire();
   runApp(MultiProvider(
     // ignore: always_specify_types
     providers: [
@@ -28,7 +28,8 @@ void main() {
 
 const bool _isEmulator = false;
 FirebaseApp? firebase;
-void initializeFlutterFire() async {
+
+Future<void> initializeFlutterFire() async {
   try {
     firebase = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
