@@ -40,8 +40,10 @@ class AddExpenseController {
     try {
       if (_valid(context)) {
         showSendingDialogue(context);
-        uploadTask = FirebaseStorageService.uploadPickerRes(
-            Constants.EXPENSE_BILLS_FOLDER, filePickerRes);
+        if (filePickerRes != null) {
+          uploadTask = FirebaseStorageService.uploadPickerRes(
+              Constants.EXPENSE_BILLS_FOLDER, filePickerRes);
+        }
         final ModelExpense expenseDo = buildExpenseDo();
         CallContext callContext =
             await ExpenseApis().addNewExpense(expenseDo, vehicleDo!, context);
@@ -59,7 +61,7 @@ class AddExpenseController {
 
   bool _valid(BuildContext context) {
     try {
-      validate.object(filePickerRes, 'Choose Bill image', context);
+      //validate.object(filePickerRes, 'Choose Bill image', context);
       validate.object(vehicleDo, 'Please choose Vehicle', context);
       validate.object(driverDo, 'Please choose Driver', context);
       validate.stringField(amntCtrl.text, 'Invalid Total Amount', context,
@@ -80,7 +82,7 @@ class AddExpenseController {
   ModelExpense buildExpenseDo() {
     int odoReading = double.parse(odoReadingCtrl.text).toInt();
     double amount = double.parse(amntCtrl.text);
-    String imagePath = uploadTask!.snapshot.ref.fullPath;
+    String? imagePath = uploadTask?.snapshot.ref.fullPath;
     final ModelExpense expenseDo = ModelExpense(
         amount: amount,
         expenseType: expenseType,

@@ -8,6 +8,7 @@ import 'package:fleezy_web/Screens/HomePage/HomeScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/ErrorScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoadingScreen.dart';
 import 'package:fleezy_web/Screens/LandingScreens/LoginScreen.dart';
+import 'package:fleezy_web/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,8 @@ const bool _isEmulator = false;
 FirebaseApp? firebase;
 void initializeFlutterFire() async {
   try {
-    firebase = await Firebase.initializeApp();
+    firebase = await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
     if (_isEmulator) {
       FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
       await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
