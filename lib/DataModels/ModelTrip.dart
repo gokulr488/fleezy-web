@@ -16,7 +16,7 @@ class ModelTrip {
     this.tripNo,
     required this.vehicleRegNo,
     this.driverName,
-    required this.driverUid,
+    this.driverUid, //TODO this field is not guaranteed to be available, so change it to driver phone number
     required this.startingFrom,
     required this.destination,
     this.status,
