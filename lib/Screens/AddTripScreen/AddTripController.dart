@@ -119,7 +119,7 @@ class AddTripController {
       endDate: Utils.getTimeStamp(tripStartDate),
       startReading: startOdo,
       vehicleRegNo: vehicleDo!.registrationNo,
-      driverUid: driverDo!.uid!,
+      driverUid: driverDo!.uid,
       startingFrom: startingFromCtrl.text,
       destination: destinationCtrl.text,
       billAmount: totalAmnt,

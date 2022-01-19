@@ -26,7 +26,7 @@ class ModelTrip {
   });
   String? id;
   String? driverName;
-  String driverUid;
+  String? driverUid;
   Timestamp startDate;
   Timestamp? endDate;
   int startReading;
